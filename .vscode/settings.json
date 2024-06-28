@@ -1,0 +1,16 @@
+{
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "files.refactoring.autoSave": false,
+  "prettier.printWidth": 120,
+  "prettier.trailingComma": "none",
+  "prettier.bracketSameLine": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.mouseWheelZoom": true,
+  "terminal.integrated.mouseWheelZoom": true
+}

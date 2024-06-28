@@ -1,0 +1,55 @@
+.navbar {
+  float: right;
+  .menu--static--on {
+    .menu--content {
+      ul {
+        display: inline-flex;
+        float: right;
+        min-height: 5rem;
+        li {
+          text-align: center;
+          align-content: center;
+          list-style-type: none;
+
+          a {
+            position: relative;
+            white-space: nowrap;
+            margin: 0 1.5rem;
+            font-size: 1.5rem;
+          }
+
+          a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--shining-color-writing);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.5s ease-out;
+          }
+
+          a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+          }
+
+          .link--active {
+            color: var(--shining-color-writing);
+          }
+
+          .link--inactive {
+            color: var(--white);
+          }
+
+          .link--inactive:hover {
+            transition: color 0.3s ease;
+            color: var(--shining-color-writing);
+          }
+        }
+      }
+    }
+  }
+}
