@@ -2,10 +2,10 @@ import DictionaryInterface from "utils/interfaces/DictionaryInterface";
 
 /** English dictionary. */
 const English: DictionaryInterface = {
-  aboutTitle: "About the Website",
+  aboutTitle: "About",
   english: "English",
   errorTitle: "Error",
-  french: "French",
+  french: "Français",
   headerTitle: "Header",
   homeTitle: "My Journey",
   languageSettingsTitle: "Language",

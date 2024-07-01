@@ -2,8 +2,8 @@ import DictionaryInterface from "utils/interfaces/DictionaryInterface";
 
 /** French dictionary. */
 const French: DictionaryInterface = {
-  aboutTitle: "À Propos du Site Web",
-  english: "Anglais",
+  aboutTitle: "À Propos",
+  english: "English",
   errorTitle: "Erreur",
   french: "Français",
   headerTitle: "Header",

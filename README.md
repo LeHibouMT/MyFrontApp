@@ -10,7 +10,6 @@
 
 - [Set up, update and run the project](#Set-up-update-and-run-the-project)
 - [Project](#Project)
-  - [Structure](#Structure)
   - [Set up](#Set-up)
   - [Development](#Development)
 
@@ -68,52 +67,6 @@ npm start
 >
 > <p align="justify">The project's structure, set up and development are explained below.</p>
 
-### Structure:
-
-<p align="justify">The project has four folders at its root, one for vscode, one for node modules, one for the Webpack output and one for all React source code:</p>
-
-- <p align="justify">".vscode" folder contains all VSCode-related files.</p>
-
-- <p align="justify">"node_modules" folder contains all packages and modules, to clean this folder, you can delete it and use `npm install`.</p>
-
-- <p align="justify">"output" folder contains the html file, the JavaScript script created by Webpack during compilation is also in this folder.</p>
-
-- <p align="justify">"src" folder contains all code-related files.</p>
-
-  - <p align="justify">"components" folder contains all components and subcomponents, the distinction between components and subcomponents is that subcomponents are reusable, whereas components are unique.</p>
-
-    - <p align="justify">"subcomponents" folder contains all reusable subcomponent-related files.</p>
-
-  - <p align="justify">"pages" folder contains all pages imports and exports.</p>
-
-  - <p align="justify">"styles" folder contains all style-related files.</p>
-
-  - <p align="justify">"tests" folder contains all test-related files.</p>
-
-  - <p align="justify">"utils" folder contains all other needed files, including interfaces, types, contexts, and constants in my React project.</p>
-
-    - <p align="justify">"constants" folder contains all constant-related files.</p>
-
-    - <p align="justify">"contexts" folder contains all context-related files.</p>
-
-    - <p align="justify">"dictionaries" folder contains all translation-related files.</p>
-
-    - <p align="justify">"interfaces" folder contains all interface-related files.</p>
-
-    - <p align="justify">"types" folder contains all types related-related files.</p>
-
-- <p align="justify">"index.tsx" file serves as the entry point for the application.</p>
-
-- <p align="justify">".eslintrc.json" file defines the ESLint configuration for the project.</p>
-
-- <p align="justify">"package-lock.json" file is an automatically generated file created by npm. It serves as a detailed record of the exact versions of every installed package and its dependencies, including nested dependencies.</p>
-
-- <p align="justify">"package.json" file serves as a central metadata file for Node.js projects, containing essential information.</p>
-
-- <p align="justify">"tsconfig.json" file defines the TypeScript configuration for the project.</p>
-
-- <p align="justify">"webpack.config.json" file defines the Webpack configuration for the project.</p>
-
 ### Set up:
 
 <p align="justify">I embarked on this project after contemplating what I could accomplish independently to showcase my skills. Consequently, this project is built with seemingly unnecessary rigor and processes to demonstrate my experience. A developer's role involves more than just writing lines of code.</p>
@@ -124,4 +77,4 @@ npm start
 
 ### Development:
 
-<p align="justify">I started by creating a basic application with Home, About, and Error pages. Afterwards, I incorporated a header and implemented language, theme and screen size (Desktop/Mobile) settings with React contexts, media queries and cookies. To style components, I decided to use Less to define variables and mixins. Next, I defined various constants, interfaces and types for TypeScript and proceeded to create components, such as the menu component, and custom hooks for my needs.</p>
+<p align="justify">I started by creating a basic application with Home, About, and Error pages. Afterwards, I incorporated a header and implemented language, theme and screen size (Desktop/Mobile) settings with React contexts, media queries and cookies. To style components, I decided to use Less to define variables and mixins. Next, I defined various constants, interfaces and types for TypeScript and proceeded to create components, such as the menu component, and custom hooks for my needs. Later, I added a mobile version of the navigation bar, and an animated button to open/close the menu of the mobile navigation bar.</p>

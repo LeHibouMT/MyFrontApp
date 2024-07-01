@@ -54,9 +54,9 @@ const App: React.FC = () => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <LanguageContext.Provider value={{ language, setLanguage }}>
-        <div id="app" className={`app--${theme}--theme`}>
+        <div id="app" className={`app__theme--${theme}`}>
           <Header />
-          <div className="page--content">
+          <div className="page__content">
             <div className="banner--left"></div>
             <div className="content">
               <Routes>
