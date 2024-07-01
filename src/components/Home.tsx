@@ -1,13 +1,12 @@
 import { useContext } from "react";
-import LanguageContext from "utils/contexts/LanguageContext";
-import Dictionary from "utils/constants/dictionaries/Dictionary";
+import LanguageContext, { Translator } from "utils/language/language.utils";
 
 /**
  * Default page.
  */
 const Home: React.FC = () => {
   const languageContext = useContext(LanguageContext);
-  const ts = Dictionary(languageContext.language);
+  const ts = Translator[languageContext.language];
 
   return (
     <div className="home">

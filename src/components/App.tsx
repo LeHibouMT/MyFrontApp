@@ -2,18 +2,14 @@ import "styles/Styles";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
-import HomePage from "pages/HomePage";
-import AboutPage from "pages/AboutPage";
-import ErrorPage from "pages/ErrorPage";
-import SettingsPage from "pages/SettingsPage";
 import useMediaQuery from "hooks/useMediaQuery";
-import ThemeContext from "utils/contexts/ThemeContext";
-import LanguageContext from "utils/contexts/LanguageContext";
-import { PossibleThemes } from "utils/types/ThemeTypes";
-import { PossibleThemesList } from "utils/constants/ThemeConstants";
-import { PossibleLanguages } from "utils/types/LanguageTypes";
-import { PossibleLanguagesList } from "utils/constants/LanguageConstants";
+import ThemeContext, { PossibleThemes, isValidTheme } from "utils/theme/theme.utils";
+import LanguageContext, { PossibleLanguages, isValidLanguage } from "utils/language/language.utils";
 import Header from "./Header";
+import Home from "./Home";
+import About from "./About";
+import Settings from "./Settings";
+import Error from "./Error";
 
 /**
  * The routing of the application is done in this component.
@@ -30,7 +26,7 @@ const App: React.FC = () => {
 
   function getTheme(): PossibleThemes {
     const themeCookie = Cookies.get("theme");
-    if (themeCookie && PossibleThemesList.includes(themeCookie)) {
+    if (themeCookie && isValidTheme(themeCookie)) {
       return themeCookie;
     }
     if (prefersDarkThemeQuery) {
@@ -41,7 +37,7 @@ const App: React.FC = () => {
 
   function getLanguage(): PossibleLanguages {
     const languageCookie = Cookies.get("language");
-    if (languageCookie && PossibleLanguagesList.includes(languageCookie)) {
+    if (languageCookie && isValidLanguage(languageCookie)) {
       return languageCookie;
     }
     return "english";
@@ -60,10 +56,10 @@ const App: React.FC = () => {
             <div className="banner--left"></div>
             <div className="content">
               <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/About" element={<AboutPage />} />
-                <Route path="/Settings" element={<SettingsPage />} />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/About" element={<About />} />
+                <Route path="/Settings" element={<Settings />} />
+                <Route path="*" element={<Error />} />
               </Routes>
             </div>
             <div className="banner--right"></div>

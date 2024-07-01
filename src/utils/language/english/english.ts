@@ -1,14 +1,16 @@
-import DictionaryInterface from "utils/interfaces/DictionaryInterface";
+import { Dictionary } from "utils/language/language.utils";
 
 /** English dictionary. */
-const English: DictionaryInterface = {
+const English: Dictionary = {
   aboutTitle: "About",
+  dark: "Dark",
   english: "English",
   errorTitle: "Error",
   french: "Français",
   headerTitle: "Header",
   homeTitle: "My Journey",
   languageSettingsTitle: "Language",
+  light: "Light",
   settingsTitle: "Settings",
   themeSettingsTitle: "Theme",
   welcome: "Home"

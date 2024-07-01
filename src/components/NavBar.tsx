@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useMediaQuery from "hooks/useMediaQuery";
-import LanguageContext from "utils/contexts/LanguageContext";
-import Dictionary from "utils/constants/dictionaries/Dictionary";
-import LinkInterface from "utils/interfaces/LinkInterface";
+import LanguageContext, { Translator } from "utils/language/language.utils";
 import Menu from "./subcomponents/Menu";
 import AnimatedMenuButton from "./subcomponents/AnimatedMenuButton";
+
+interface Link {
+  path: string;
+  label: string;
+}
 
 /**
  * Navigation bar used to switch the selected page.
@@ -14,7 +17,7 @@ const NavBar: React.FC = () => {
   const isMobileQuery = useMediaQuery("(max-width: 768px)");
   const [isMobile, setIsMobile] = useState(isMobileQuery);
   const languageContext = useContext(LanguageContext);
-  const ts = Dictionary(languageContext.language);
+  const ts = Translator[languageContext.language];
   const currentPage = useLocation().pathname;
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ const NavBar: React.FC = () => {
   /**
    * Links for the navigation.
    */
-  const LinksList: LinkInterface[] = [
+  const LinksList: Link[] = [
     {
       path: "/",
       label: ts.homeTitle

@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import Cookies from "js-cookie";
-import ThemeContext from "utils/contexts/ThemeContext";
-import LanguageContext from "utils/contexts/LanguageContext";
-import Dictionary from "utils/constants/dictionaries/Dictionary";
-import { PossibleThemesList } from "utils/constants/ThemeConstants";
-import { PossibleLanguagesList } from "utils/constants/LanguageConstants";
+import ThemeContext, { PossibleThemesList, isValidTheme } from "utils/theme/theme.utils";
+import LanguageContext, {
+  Translator,
+  PossibleLanguagesList,
+  isValidLanguage,
+  isValidText
+} from "utils/language/language.utils";
 import Menu from "./subcomponents/Menu";
 
 /**
@@ -13,7 +15,7 @@ import Menu from "./subcomponents/Menu";
 const Settings: React.FC = () => {
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
-  const ts = Dictionary(languageContext.language);
+  const ts = Translator[languageContext.language];
 
   const getThemeContent = () => (
     <ul>
@@ -21,12 +23,12 @@ const Settings: React.FC = () => {
         <li key={index}>
           <button
             onClick={() => {
-              if (themeContext.setTheme) {
+              if (themeContext.setTheme && isValidTheme(elem)) {
                 themeContext.setTheme(elem);
                 Cookies.set("theme", elem);
               }
             }}>
-            {elem}
+            {isValidText(elem) && ts[elem]}
           </button>
         </li>
       ))}
@@ -39,12 +41,12 @@ const Settings: React.FC = () => {
         <li key={index}>
           <button
             onClick={() => {
-              if (languageContext.setLanguage) {
+              if (languageContext.setLanguage && isValidLanguage(elem)) {
                 languageContext.setLanguage(elem);
                 Cookies.set("language", elem);
               }
             }}>
-            {elem}
+            {isValidText(elem) && ts[elem]}
           </button>
         </li>
       ))}
