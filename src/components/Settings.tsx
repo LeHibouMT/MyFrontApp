@@ -1,13 +1,19 @@
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import Cookies from "js-cookie";
-import ThemeContext, { PossibleThemesList, isValidTheme } from "utils/theme/theme.utils";
+import ThemeContext, { PossibleThemes, PossibleThemesList, isValidTheme } from "utils/theme/theme.utils";
 import LanguageContext, {
   Translator,
   PossibleLanguagesList,
   isValidLanguage,
-  isValidText
+  PossibleLanguages
 } from "utils/language/language.utils";
-import Menu from "./subcomponents/Menu";
+import TabsMenu from "./subcomponents/TabsMenu";
+import RadioButtonsList from "./subcomponents/RadioButtonsList";
+
+interface SettingsValue {
+  theme: PossibleThemes;
+  language: PossibleLanguages;
+}
 
 /**
  * Settings page, you can change your theme and language with this component.
@@ -16,48 +22,97 @@ const Settings: React.FC = () => {
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
   const ts = Translator[languageContext.language];
-
-  const getThemeContent = () => (
-    <ul>
-      {PossibleThemesList.map((elem, index) => (
-        <li key={index}>
-          <button
-            onClick={() => {
-              if (themeContext.setTheme && isValidTheme(elem)) {
-                themeContext.setTheme(elem);
-                Cookies.set("theme", elem);
-              }
-            }}>
-            {isValidText(elem) && ts[elem]}
-          </button>
-        </li>
-      ))}
-    </ul>
+  const [settingsValue, setSettingsValue] = useState<SettingsValue>({
+    theme: themeContext.theme,
+    language: languageContext.language
+  });
+  const themeBoxes = useMemo(
+    () =>
+      PossibleThemesList.map((theme) => ({
+        label: ts[theme],
+        value: theme
+      })),
+    [ts]
+  );
+  const languageBoxes = useMemo(
+    () =>
+      PossibleLanguagesList.map((language) => ({
+        label: ts[language],
+        value: language
+      })),
+    [ts]
   );
 
-  const getLanguageContent = () => (
-    <ul>
-      {PossibleLanguagesList.map((elem, index) => (
-        <li key={index}>
-          <button
-            onClick={() => {
-              if (languageContext.setLanguage && isValidLanguage(elem)) {
-                languageContext.setLanguage(elem);
-                Cookies.set("language", elem);
-              }
-            }}>
-            {isValidText(elem) && ts[elem]}
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
+  function handleSummit() {
+    themeContext.setTheme(settingsValue.theme);
+    Cookies.set("theme", settingsValue.theme, { sameSite: "Strict", secure: true });
+    languageContext.setLanguage(settingsValue.language);
+    Cookies.set("language", settingsValue.language, { sameSite: "Strict", secure: true });
+  }
+
+  function handleReset() {
+    setSettingsValue({
+      theme: themeContext.theme,
+      language: languageContext.language
+    });
+  }
+
+  function getThemeSettingsContent() {
+    return (
+      <>
+        <p>To Change Later</p>
+        <RadioButtonsList
+          Boxes={themeBoxes}
+          Name="theme"
+          CheckedValue={settingsValue.theme}
+          OnChange={(value: string) => {
+            isValidTheme(value) && setSettingsValue({ ...settingsValue, theme: value });
+          }}
+        />
+        <button type="submit">Save changes</button>
+        <button type="button" onClick={handleReset}>
+          Discard changes
+        </button>
+      </>
+    );
+  }
+
+  function getLanguageSettingsContent() {
+    return (
+      <>
+        <p>To Change Later</p>
+        <RadioButtonsList
+          Boxes={languageBoxes}
+          Name="language"
+          CheckedValue={settingsValue.language}
+          OnChange={(value: string) => {
+            isValidLanguage(value) && setSettingsValue({ ...settingsValue, language: value });
+          }}
+        />
+        <button type="submit">Save changes</button>
+        <button type="button" onClick={handleReset}>
+          Discard changes
+        </button>
+      </>
+    );
+  }
 
   return (
     <div className="settings">
       <h2>{ts.settingsTitle}</h2>
-      <Menu Type="static" Content={getThemeContent()} Title={ts.themeSettingsTitle} />
-      <Menu Type="static" Content={getLanguageContent()} Title={ts.languageSettingsTitle} />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSummit();
+        }}>
+        <TabsMenu
+          Tabs={[
+            { title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
+            { title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
+          ]}
+          OnTabChange={handleReset}
+        />
+      </form>
     </div>
   );
 };

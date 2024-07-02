@@ -9,13 +9,13 @@ import Signature from "../Signature";
  * @param Title Optional title for the menu.
  * @param Button Optional button for the menu.
  */
-const Menu: React.FC<{
+const NavBarMenu: React.FC<{
   Type: "static" | "click" | "hover";
   Content: React.ReactNode;
   Title?: string;
   Button?: React.FC<boolean>;
 }> = (props) => {
-  const [isVisible, setIsVisible] = useState(props.Type === "static" ? true : false);
+  const [isVisible, setIsVisible] = useState<boolean>(props.Type === "static" ? true : false);
 
   function switchVisibility() {
     setIsVisible(!isVisible);
@@ -50,4 +50,4 @@ const Menu: React.FC<{
   );
 };
 
-export default Menu;
+export default NavBarMenu;

@@ -78,12 +78,17 @@ export const Translator: TranslatorType = {
  */
 export interface LanguageInterface {
   language: PossibleLanguages;
-  setLanguage: ((newLangSelected: PossibleLanguages) => void) | undefined;
+  setLanguage: (newLangSelected: PossibleLanguages) => void;
 }
 
+/**
+ * This is the language context of the application.
+ * setLanguage is just an empty function at first,
+ * It is used with an useState hook in the App component.
+ */
 const LanguageContext = createContext<LanguageInterface>({
   language: "english",
-  setLanguage: undefined
+  setLanguage: () => {}
 });
 
 export default LanguageContext;

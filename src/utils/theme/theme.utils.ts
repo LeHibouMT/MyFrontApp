@@ -19,21 +19,22 @@ export function isValidTheme(value: string): value is PossibleThemes {
 
 /**
  * Interface for the theme, with a selected theme and a function to change the theme.
- * @param theme Language selected.
- * @param setTheme Function to change the language.
+ * @param theme Theme selected.
+ * @param setTheme Function to change the theme.
  */
 export interface ThemeInterface {
   theme: PossibleThemes;
-  setTheme: ((newThemeSelected: PossibleThemes) => void) | undefined;
+  setTheme: (newThemeSelected: PossibleThemes) => void;
 }
 
 /**
  * This is the theme context of the application.
- * setValue is undefined at first, it is used with an useState hook in the App component.
+ * setTheme is undefined at first
+ * It is used with an useState hook in the App component.
  */
 const ThemeContext = createContext<ThemeInterface>({
   theme: "light",
-  setTheme: undefined
+  setTheme: () => {}
 });
 
 export default ThemeContext;

@@ -1,5 +1,6 @@
 /**
  * Animated button.
+ * @param checked true if the button is active.
  */
 const AnimatedMenuButton: React.FC<boolean> = (checked) => {
   return (
