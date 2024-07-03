@@ -27,7 +27,7 @@ const NavBarMenu: React.FC<{
 
   return (
     <div
-      className={`menu--${props.Type}--${isVisible ? "on" : "off"}`}
+      className={`navbar__menu--${props.Type}--${isVisible ? "on" : "off"}`}
       onMouseEnter={props.Type === "hover" ? switchVisibility : undefined}
       onMouseLeave={props.Type === "hover" ? switchVisibility : undefined}>
       {props.Title && (

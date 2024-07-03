@@ -6,7 +6,7 @@ import LanguageContext, { Translator } from "utils/language/language.utils";
  */
 const Error: React.FC = () => {
   const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.language];
+  const ts = Translator[languageContext.value];
 
   return (
     <div className="error">

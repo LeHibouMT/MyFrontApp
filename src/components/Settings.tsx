@@ -1,14 +1,17 @@
-import { useContext, useMemo, useState } from "react";
 import Cookies from "js-cookie";
-import ThemeContext, { PossibleThemes, PossibleThemesList, isValidTheme } from "utils/theme/theme.utils";
-import LanguageContext, {
-  Translator,
-  PossibleLanguagesList,
+import { useContext, useMemo, useState } from "react";
+import LanguageContext, { Translator } from "utils/language/language.utils";
+import ThemeContext from "utils/theme/theme.utils";
+import {
   isValidLanguage,
-  PossibleLanguages
-} from "utils/language/language.utils";
-import TabsMenu from "./subcomponents/TabsMenu";
+  isValidTheme,
+  PossibleLanguages,
+  PossibleLanguagesList,
+  PossibleThemes,
+  PossibleThemesList
+} from "utils/types/types.utils";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
+import TabsMenu from "./subcomponents/TabsMenu";
 
 interface SettingsValue {
   theme: PossibleThemes;
@@ -21,10 +24,10 @@ interface SettingsValue {
 const Settings: React.FC = () => {
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.language];
+  const ts = Translator[languageContext.value];
   const [settingsValue, setSettingsValue] = useState<SettingsValue>({
-    theme: themeContext.theme,
-    language: languageContext.language
+    theme: themeContext.value,
+    language: languageContext.value
   });
   const themeBoxes = useMemo(
     () =>
@@ -44,16 +47,16 @@ const Settings: React.FC = () => {
   );
 
   function handleSummit() {
-    themeContext.setTheme(settingsValue.theme);
+    themeContext.setValue(settingsValue.theme);
     Cookies.set("theme", settingsValue.theme, { sameSite: "Strict", secure: true });
-    languageContext.setLanguage(settingsValue.language);
+    languageContext.setValue(settingsValue.language);
     Cookies.set("language", settingsValue.language, { sameSite: "Strict", secure: true });
   }
 
   function handleReset() {
     setSettingsValue({
-      theme: themeContext.theme,
-      language: languageContext.language
+      theme: themeContext.value,
+      language: languageContext.value
     });
   }
 

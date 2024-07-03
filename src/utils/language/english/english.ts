@@ -1,4 +1,4 @@
-import { Dictionary } from "utils/language/language.utils";
+import { Dictionary } from "utils/types/types.utils";
 
 /** English dictionary. */
 const English: Dictionary = {

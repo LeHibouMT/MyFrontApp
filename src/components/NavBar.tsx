@@ -1,9 +1,9 @@
+import useMediaQuery from "hooks/useMediaQuery";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useMediaQuery from "hooks/useMediaQuery";
 import LanguageContext, { Translator } from "utils/language/language.utils";
-import Menu from "./subcomponents/NavBarMenu";
 import AnimatedMenuButton from "./subcomponents/AnimatedMenuButton";
+import NavBarMenu from "./subcomponents/NavBarMenu";
 
 interface Link {
   path: string;
@@ -17,7 +17,7 @@ const NavBar: React.FC = () => {
   const isMobileQuery = useMediaQuery("(max-width: 768px)");
   const [isMobile, setIsMobile] = useState<boolean>(isMobileQuery);
   const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.language];
+  const ts = Translator[languageContext.value];
   const currentPage = useLocation().pathname;
   const navigate = useNavigate();
 
@@ -58,7 +58,11 @@ const NavBar: React.FC = () => {
 
   return (
     <div className={`navbar${isMobile ? "--mobile" : ""}`}>
-      <Menu Type={isMobile ? "click" : "static"} Content={Content} Button={isMobile ? AnimatedMenuButton : undefined} />
+      <NavBarMenu
+        Type={isMobile ? "click" : "static"}
+        Content={Content}
+        Button={isMobile ? AnimatedMenuButton : undefined}
+      />
     </div>
   );
 };

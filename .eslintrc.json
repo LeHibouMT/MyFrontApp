@@ -15,8 +15,17 @@
     "indent": ["error", 2],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "import/imports-first": ["error", "absolute-first"],
-    "import/newline-after-import": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external", "internal"],
+          ["parent", "sibling", "index"]
+        ],
+        "newlines-between": "never",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ],
     "react/jsx-filename-extension": [
       1,
       {

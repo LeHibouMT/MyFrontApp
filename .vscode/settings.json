@@ -11,6 +11,8 @@
   "prettier.bracketSameLine": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.mouseWheelZoom": true,
-  "terminal.integrated.mouseWheelZoom": true
+  "editor.mouseWheelZoom": false,
+  "terminal.integrated.mouseWheelZoom": false,
+  "window.zoomPerWindow": true,
+  "window.zoomLevel": 0
 }

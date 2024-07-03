@@ -5,7 +5,7 @@ import "./App";
 import "./Error";
 import "./Header";
 import "./Home";
-import "./Menu";
+import "./NavBarMenu";
 import "./NavBar";
 import "./Settings";
 import "./Signature";

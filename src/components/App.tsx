@@ -1,15 +1,16 @@
 import "styles/Styles";
+import useMediaQuery from "hooks/useMediaQuery";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Cookies from "js-cookie";
-import useMediaQuery from "hooks/useMediaQuery";
-import ThemeContext, { PossibleThemes, isValidTheme } from "utils/theme/theme.utils";
-import LanguageContext, { PossibleLanguages, isValidLanguage } from "utils/language/language.utils";
+import LanguageContext from "utils/language/language.utils";
+import ThemeContext from "utils/theme/theme.utils";
+import { isValidLanguage, isValidTheme, PossibleLanguages, PossibleThemes } from "utils/types/types.utils";
+import About from "./About";
+import Error from "./Error";
 import Header from "./Header";
 import Home from "./Home";
-import About from "./About";
 import Settings from "./Settings";
-import Error from "./Error";
 
 /**
  * The routing of the application is done in this component.
@@ -48,8 +49,8 @@ const App: React.FC = () => {
   }, [prefersDarkThemeQuery]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <LanguageContext.Provider value={{ language, setLanguage }}>
+    <ThemeContext.Provider value={{ value: theme, setValue: setTheme }}>
+      <LanguageContext.Provider value={{ value: language, setValue: setLanguage }}>
         <div id="app" className={`app__theme--${theme}`}>
           <Header />
           <div className="page__content">
