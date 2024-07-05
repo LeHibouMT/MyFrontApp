@@ -8,6 +8,7 @@ import ThemeContext from "utils/theme/theme.utils";
 import { isValidLanguage, isValidTheme, PossibleLanguages, PossibleThemes } from "utils/types/types.utils";
 import About from "./About";
 import Error from "./Error";
+import Footer from "./Footer";
 import Header from "./Header";
 import Home from "./Home";
 import Settings from "./Settings";
@@ -53,18 +54,17 @@ const App: React.FC = () => {
       <LanguageContext.Provider value={{ value: language, setValue: setLanguage }}>
         <div id="app" className={`app__theme--${theme}`}>
           <Header />
-          <div className="page__content">
-            <div className="banner--left"></div>
-            <div className="content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/About" element={<About />} />
-                <Route path="/Settings" element={<Settings />} />
-                <Route path="*" element={<Error />} />
-              </Routes>
-            </div>
-            <div className="banner--right"></div>
-          </div>
+          <section className="banner--left"></section>
+          <main className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/About" element={<About />} />
+              <Route path="/Settings" element={<Settings />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </main>
+          <section className="banner--right"></section>
+          <Footer />
         </div>
       </LanguageContext.Provider>
     </ThemeContext.Provider>

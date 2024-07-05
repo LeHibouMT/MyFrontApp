@@ -101,7 +101,7 @@ const Settings: React.FC = () => {
   }
 
   return (
-    <div className="settings">
+    <section className="settings">
       <h2>{ts.settingsTitle}</h2>
       <form
         onSubmit={(e) => {
@@ -116,7 +116,7 @@ const Settings: React.FC = () => {
           OnTabChange={handleReset}
         />
       </form>
-    </div>
+    </section>
   );
 };
 

@@ -1,3 +1,24 @@
+:root {
+  --border-color-background: #2f3640;
+  --white: #ffffff;
+  --aurora-green: #78e08f;
+  --reef-encounter: #079992;
+  --dark-saphire: #0c2461;
+  --classic-font-size: 1.8rem;
+  --large-font-size: 2.7rem;
+  --super-font-size: 3.3rem;
+  --extra-font-size: 3.6rem;
+
+  overflow-y: auto;
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 1.6rem;
+}
+
 .app__theme--light {
   --classic-color-writing: #010204;
   --shining-color-writing: #ffa502;
@@ -12,66 +33,61 @@
   --header-color-background: #010409;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 #app {
-  --border-color-background: #2f3640;
   background-color: var(--classic-color-background);
-  --white: #ffffff;
-  --aurora-green: #78e08f;
-  --reef-encounter: #079992;
-  --dark-saphire: #0c2461;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   font-family: Poppins, Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr min(900px, 100%) 1fr;
+  grid-template-rows: auto auto auto;
 
-  .page__content {
-    flex: 1;
-    display: flex;
-    align-items: stretch;
-    border-top: 1px solid var(--border-color-background);
+  .header {
+    grid-column: ~"1/-1";
+  }
 
+  .footer {
+    grid-column: ~"1/-1";
+  }
+
+  .content {
+    min-height: 100vh;
+    padding: 0 7.5%;
+  }
+
+  @media (min-width: 1025px) {
     .banner {
       &--left,
       &--right {
-        flex-grow: 1;
-        max-width: 5%;
-      }
-    }
-
-    .content {
-      flex-grow: 1;
-      max-width: 90%;
-
-      h2 {
-        padding: 1rem;
+        background-image: url("/src/media/svg/react.svg");
       }
     }
   }
 }
 
 h1 {
-  font-size: 5rem;
+  font-size: var(--extra-font-size);
   text-align: center;
-  padding: 1rem 0;
   color: var(--classic-color-writing);
+  padding: 1rem 0;
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: var(--super-font-size);
   text-align: center;
   color: var(--classic-color-writing);
 }
 
 p {
-  font-size: 1rem;
+  font-size: var(--classic-font-size);
+  color: var(--classic-color-writing);
 }
 
 a {
+  font-size: var(--classic-font-size);
   text-decoration: none;
+  color: var(--classic-color-writing);
+}
+
+span {
+  font-size: var(--classic-font-size);
   color: var(--classic-color-writing);
 }

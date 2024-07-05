@@ -3,10 +3,11 @@ import "./About";
 import "./AnimatedMenuButton";
 import "./App";
 import "./Error";
+import "./Footer";
 import "./Header";
 import "./Home";
-import "./NavBarMenu";
 import "./NavBar";
+import "./NavBarMenu";
 import "./Settings";
 import "./Signature";
 /**

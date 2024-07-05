@@ -1,13 +1,13 @@
 import NavBar from "./NavBar";
 
 /**
- * The Header component is visible on all pages with the navigation bar.
+ * The Header component is visible with the navigation bar at the top of all pages.
  */
 const Header: React.FC = () => {
   return (
-    <div className="header">
+    <header className="header">
       <NavBar />
-    </div>
+    </header>
   );
 };
 

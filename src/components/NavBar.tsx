@@ -1,9 +1,9 @@
 import useMediaQuery from "hooks/useMediaQuery";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LanguageContext, { Translator } from "utils/language/language.utils";
 import AnimatedMenuButton from "./subcomponents/AnimatedMenuButton";
-import NavBarMenu from "./subcomponents/NavBarMenu";
+import Menu from "./subcomponents/Menu";
 
 interface Link {
   path: string;
@@ -14,16 +14,11 @@ interface Link {
  * Navigation bar used to switch the selected page.
  */
 const NavBar: React.FC = () => {
-  const isMobileQuery = useMediaQuery("(max-width: 768px)");
-  const [isMobile, setIsMobile] = useState<boolean>(isMobileQuery);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const languageContext = useContext(LanguageContext);
   const ts = Translator[languageContext.value];
   const currentPage = useLocation().pathname;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setIsMobile(isMobileQuery);
-  }, [isMobileQuery]);
 
   /**
    * Links for the navigation.
@@ -57,13 +52,9 @@ const NavBar: React.FC = () => {
   );
 
   return (
-    <div className={`navbar${isMobile ? "--mobile" : ""}`}>
-      <NavBarMenu
-        Type={isMobile ? "click" : "static"}
-        Content={Content}
-        Button={isMobile ? AnimatedMenuButton : undefined}
-      />
-    </div>
+    <nav className={"navbar"}>
+      <Menu Type={isMobile ? "click" : "static"} Content={Content} Button={AnimatedMenuButton} />
+    </nav>
   );
 };
 

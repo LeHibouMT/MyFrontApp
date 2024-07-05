@@ -1,4 +1,16 @@
 /**
+ * Interface for all contexts, with a value and a function to change the value.
+ * @param value The value of the context.
+ * @param setValue Function to change the value.
+ */
+export interface ContextInterface<T> {
+  value: T;
+  setValue: (newValue: T) => void;
+}
+
+// #region Theme
+
+/**
  * This file contains all reusable types and constants used to define types.
  */
 
@@ -19,6 +31,9 @@ export function isValidTheme(value: string): value is PossibleThemes {
   return PossibleThemesList.includes(value as PossibleThemes);
 }
 
+// #endregion
+
+// #region Language
 /**
  * List of possible languages.
  */
@@ -43,7 +58,7 @@ export const PossibleTextsList = [
 ] as const;
 
 /**
- * Type for possible languages, should be in the enumeration of possible languages.
+ * Type for possible languages, should be in the list of possible languages.
  */
 export type PossibleLanguages = (typeof PossibleLanguagesList)[number];
 
@@ -55,7 +70,7 @@ export function isValidLanguage(value: string): value is PossibleLanguages {
 }
 
 /**
- * Type for possible texts, should be in the enumeration of possible texts.
+ * Type for possible texts, should be in the list of possible texts.
  */
 export type PossibleTexts = (typeof PossibleTextsList)[number];
 
@@ -80,12 +95,4 @@ export type TranslatorType = {
   [index in PossibleLanguages]: Dictionary;
 };
 
-/**
- * Interface for all contexts, with a value and a function to change the value.
- * @param value The value of the context.
- * @param setValue Function to change the value.
- */
-export interface ContextInterface<T> {
-  value: T;
-  setValue: (newValue: T) => void;
-}
+// #endregion

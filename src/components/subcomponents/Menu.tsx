@@ -9,7 +9,7 @@ import Signature from "../Signature";
  * @param Title Optional title for the menu.
  * @param Button Optional button for the menu.
  */
-const NavBarMenu: React.FC<{
+const Menu: React.FC<{
   Type: "static" | "click" | "hover";
   Content: React.ReactNode;
   Title?: string;
@@ -27,7 +27,7 @@ const NavBarMenu: React.FC<{
 
   return (
     <div
-      className={`navbar__menu--${props.Type}--${isVisible ? "on" : "off"}`}
+      className={`menu--${props.Type}--${isVisible ? "on" : "off"}`}
       onMouseEnter={props.Type === "hover" ? switchVisibility : undefined}
       onMouseLeave={props.Type === "hover" ? switchVisibility : undefined}>
       {props.Title && (
@@ -50,4 +50,4 @@ const NavBarMenu: React.FC<{
   );
 };
 
-export default NavBarMenu;
+export default Menu;

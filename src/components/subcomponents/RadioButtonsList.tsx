@@ -15,7 +15,7 @@ interface Box {
 const RadioButtonsList: React.FC<{
   Boxes: Box[];
   Name: string;
-  CheckedValue: string;
+  CheckedValue?: string;
   OnChange: (value: string) => void;
 }> = (props) => {
   const handleSelectedBoxChange = (event: { target: { value: string } }) => {
