@@ -3,6 +3,7 @@ import { useState } from "react";
 interface Tab {
   title: string;
   content: React.ReactNode;
+  key: string;
 }
 
 /**
@@ -14,9 +15,9 @@ interface Tab {
 const TabsMenu: React.FC<{
   Tabs: Tab[];
   InitialTab?: number;
-  OnTabChange?: () => void;
+  OnTabChange?: (tab: Tab) => void;
 }> = (props) => {
-  const [tabNumber, setTabNumber] = useState<number>(props.InitialTab ?? 0);
+  const [tabNumber, setTabNumber] = useState<number>(props.InitialTab && props.InitialTab > 0 ? props.InitialTab : 0);
 
   function getTabsMenuHeader() {
     return (
@@ -26,7 +27,7 @@ const TabsMenu: React.FC<{
             className={`tab--${tabNumber === index ? "active" : "inactive"}`}
             onClick={() => {
               setTabNumber(index);
-              props.OnTabChange?.();
+              props.OnTabChange?.(tab);
             }}
             key={index}>
             {tab.title}

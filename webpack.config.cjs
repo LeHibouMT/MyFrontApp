@@ -5,7 +5,8 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "output"),
-    filename: "webpackbuild.js"
+    filename: "webpackbundle.js",
+    publicPath: "/"
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".less"],

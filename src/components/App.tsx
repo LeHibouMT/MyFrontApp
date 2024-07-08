@@ -1,11 +1,13 @@
-import "styles/Styles";
-import useMediaQuery from "hooks/useMediaQuery";
-import Cookies from "js-cookie";
+import "components/Styles";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import LanguageContext from "utils/language/language.utils";
-import ThemeContext from "utils/theme/theme.utils";
-import { isValidLanguage, isValidTheme, PossibleLanguages, PossibleThemes } from "utils/types/types.utils";
+import useMediaQuery from "hooks/useMediaQuery";
+import Cookies from "js-cookie";
+import PossibleLanguagesEnum, { LanguageKey } from "utils/constants/language/language.constants";
+import PossibleThemesEnum, { ThemeKey } from "utils/constants/theme.constants";
+import { LanguageContext, ThemeContext } from "utils/contexts/contexts.utils";
+import PossibleLanguages, { isValidLanguage } from "utils/types/language/language.types";
+import PossibleThemes, { isValidTheme } from "utils/types/theme.types";
 import About from "./About";
 import Error from "./Error";
 import Footer from "./Footer";
@@ -27,22 +29,22 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<PossibleLanguages>(getLanguage());
 
   function getTheme(): PossibleThemes {
-    const themeCookie = Cookies.get("theme");
+    const themeCookie = Cookies.get(ThemeKey);
     if (themeCookie && isValidTheme(themeCookie)) {
       return themeCookie;
     }
     if (prefersDarkThemeQuery) {
-      return "dark";
+      return PossibleThemesEnum.dark;
     }
-    return "light";
+    return PossibleThemesEnum.light;
   }
 
   function getLanguage(): PossibleLanguages {
-    const languageCookie = Cookies.get("language");
+    const languageCookie = Cookies.get(LanguageKey);
     if (languageCookie && isValidLanguage(languageCookie)) {
       return languageCookie;
     }
-    return "english";
+    return PossibleLanguagesEnum.english;
   }
 
   useEffect(() => {
@@ -59,7 +61,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/About" element={<About />} />
-              <Route path="/Settings" element={<Settings />} />
+              <Route path="/Settings/:setting?" element={<Settings />} />
               <Route path="*" element={<Error />} />
             </Routes>
           </main>

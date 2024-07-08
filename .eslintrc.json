@@ -23,7 +23,25 @@
           ["parent", "sibling", "index"]
         ],
         "newlines-between": "never",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react-dom",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react-router-dom",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "react-dom", "react-router-dom"]
       }
     ],
     "react/jsx-filename-extension": [
@@ -64,13 +82,7 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "import/resolver": {
-      "node": {
-        "paths": ["src", "node_modules"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
     }
   },
-  "ignorePatterns": ["node_modules", "output", "webpack.config.js"]
+  "ignorePatterns": ["node_modules", "output", "webpack.config.cjs"]
 }

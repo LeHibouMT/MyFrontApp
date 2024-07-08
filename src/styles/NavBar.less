@@ -58,12 +58,16 @@
             }
           }
         }
+
+        &:hover > :not(:hover) {
+          opacity: 0.4;
+        }
       }
     }
   }
 
   @media (min-width: 768px) {
-    direction: rtl;
+    float: right;
 
     .menu--static--on {
       .menu__button {
@@ -73,6 +77,7 @@
       .menu__content {
         ul {
           display: inline-flex;
+          padding-right: 2rem;
 
           li {
             .link {
@@ -89,8 +94,6 @@
   }
 
   @media (max-width: 767px) {
-    direction: ltr;
-
     .menu--click--on,
     .menu--click--off {
       .menu__button {
@@ -119,7 +122,8 @@
           }
 
           li:hover {
-            background-color: grey;
+            background-color: var(--header-color-background--hover);
+            transition: background-color 0.3s ease;
           }
         }
       }

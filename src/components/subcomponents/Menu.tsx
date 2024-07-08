@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Signature from "../Signature";
+import Signature from "components/Signature";
 
 /**
  * This is a menu component.

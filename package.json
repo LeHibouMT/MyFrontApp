@@ -5,11 +5,11 @@
   "description": "First web application in React by Michel Taing.",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --config webpack.config.js",
+    "dev": "webpack-dev-server --open --config webpack.config.cjs",
     "lint": "eslint .",
-    "build:dev": "webpack --mode development --config webpack.config.js",
-    "build:prod": "webpack --mode production --config webpack.config.js",
-    "watch": "webpack --watch --config webpack.config.js",
+    "build:dev": "webpack --mode development --config webpack.config.cjs",
+    "build:prod": "webpack --mode production --config webpack.config.cjs",
+    "watch": "webpack --watch --config webpack.config.cjs",
     "test": "jest"
   },
   "keywords": [],

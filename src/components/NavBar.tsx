@@ -1,7 +1,8 @@
-import useMediaQuery from "hooks/useMediaQuery";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import LanguageContext, { Translator } from "utils/language/language.utils";
+import useMediaQuery from "hooks/useMediaQuery";
+import { Translator } from "utils/constants/language/translator/translator.constants";
+import { LanguageContext } from "utils/contexts/contexts.utils";
 import AnimatedMenuButton from "./subcomponents/AnimatedMenuButton";
 import Menu from "./subcomponents/Menu";
 

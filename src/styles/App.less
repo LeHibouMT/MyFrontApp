@@ -8,8 +8,6 @@
   --large-font-size: 2.7rem;
   --super-font-size: 3.3rem;
   --extra-font-size: 3.6rem;
-
-  overflow-y: auto;
   font-size: 62.5%;
 }
 
@@ -24,6 +22,7 @@
   --shining-color-writing: #ffa502;
   --classic-color-background: #ffffff;
   --header-color-background: #0e0ea7;
+  --header-color-background--hover: #080248;
 }
 
 .app__theme--dark {
@@ -31,6 +30,7 @@
   --shining-color-writing: #8854d0;
   --classic-color-background: #0d1117;
   --header-color-background: #010409;
+  --header-color-background--hover: #1f242b;
 }
 
 #app {
@@ -50,7 +50,7 @@
 
   .content {
     min-height: 100vh;
-    padding: 0 7.5%;
+    padding: var(--extra-font-size) 7.5%;
   }
 
   @media (min-width: 1025px) {
