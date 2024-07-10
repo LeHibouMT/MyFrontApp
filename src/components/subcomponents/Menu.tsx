@@ -13,7 +13,7 @@ const Menu: React.FC<{
   Type: "static" | "click" | "hover";
   Content: React.ReactNode;
   Title?: string;
-  Button?: React.FC<boolean>;
+  Button?: React.FC<{ checked: boolean }>;
 }> = (props) => {
   const [isVisible, setIsVisible] = useState<boolean>(props.Type === "static" ? true : false);
 
@@ -37,7 +37,7 @@ const Menu: React.FC<{
       )}
       {props.Button && (
         <div className="menu__button" onClick={props.Type === "click" ? switchVisibility : undefined}>
-          {props.Button(isVisible)}
+          {<props.Button checked={isVisible} />}
         </div>
       )}
       {props.Content && isVisible && (

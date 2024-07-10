@@ -9,21 +9,21 @@ interface Box {
  * This is a component displaying a list of radio buttons.
  * @param Boxes Array of boxes, each box should have a label and a value.
  * @param Name Name shared by all checkboxes.
- * @param CheckedValue The value for which a radio button should be checked.
  * @param OnChange Function to call when selecting a new value, it should change CheckedValue.
+ * @param CheckedValue The optional value for which a radio button should be checked.
  */
 const RadioButtonsList: React.FC<{
   Boxes: Box[];
   Name: string;
-  CheckedValue?: string;
   OnChange: (value: string) => void;
+  CheckedValue?: string;
 }> = (props) => {
-  const handleSelectedBoxChange = (event: { target: { value: string } }) => {
+  function handleSelectedBoxChange(event: { target: { value: string } }) {
     props.OnChange?.(event.target.value);
-  };
+  }
 
   return (
-    props.Boxes.length >= 0 &&
+    props.Boxes.length > 0 &&
     props.Boxes.map((box, index) => {
       const boxId = `${props.Name}--box--${index}`;
       return (

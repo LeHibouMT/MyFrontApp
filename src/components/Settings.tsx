@@ -1,25 +1,32 @@
 import { useContext, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
-import PossibleLanguagesEnum, { LanguageKey } from "utils/constants/language/language.constants";
-import { Translator } from "utils/constants/language/translator/translator.constants";
-import PossibleThemesEnum, { ThemeKey } from "utils/constants/theme.constants";
-import { LanguageContext, ThemeContext } from "utils/contexts/contexts.utils";
-import PossibleLanguages, { isValidLanguage } from "utils/types/language/language.types";
-import PossibleThemes, { isValidTheme } from "utils/types/theme.types";
+import PossibleLanguages, {
+  PossibleLanguagesEnum,
+  isValidLanguage,
+  LanguageContext,
+  LanguageKey,
+  setLanguageCookie
+} from "utils/language.utils";
+import PossibleThemes, {
+  isValidTheme,
+  PossibleThemesEnum,
+  setThemeCookie,
+  ThemeContext,
+  ThemeKey
+} from "utils/theme.utils";
+import Translator from "utils/translator/translator.utils";
+import Form from "./subcomponents/Form";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
-import TabsMenu from "./subcomponents/TabsMenu";
+import TabsMenu, { TabInterface } from "./subcomponents/TabsMenu";
 
-interface SettingsValue {
-  theme: PossibleThemes;
-  language: PossibleLanguages;
-}
+type SettingsValue = {
+  [ThemeKey]: PossibleThemes;
+  [LanguageKey]: PossibleLanguages;
+};
 
-interface SettingsTab {
-  title: string;
-  content: React.ReactNode;
-  key: string;
-}
+type Tabs = {
+  [S in keyof SettingsValue]: TabInterface<S>;
+};
 
 /**
  * Settings page, you can change your theme and language with this component.
@@ -31,76 +38,72 @@ const Settings: React.FC = () => {
   const languageContext = useContext(LanguageContext);
   const ts = Translator[languageContext.value];
   const [settingsValue, setSettingsValue] = useState<SettingsValue>({
-    theme: themeContext.value,
-    language: languageContext.value
+    [ThemeKey]: themeContext.value,
+    [LanguageKey]: languageContext.value
   });
-  const themeSettingsContent = useMemo(() => getThemeSettingsContent(), [ts, settingsValue.theme]);
-  const languageSettingsContent = useMemo(() => getLanguageSettingsContent(), [ts, settingsValue.language]);
-  const tabs: SettingsTab[] = [
-    { title: ts.themeSettingsTitle, content: themeSettingsContent, key: ThemeKey },
-    { title: ts.languageSettingsTitle, content: languageSettingsContent, key: LanguageKey }
-  ];
+  const themeSettingsContent = useMemo(() => getThemeSettingsContent(), [ts, settingsValue[ThemeKey]]);
+  const languageSettingsContent = useMemo(() => getLanguageSettingsContent(), [ts, settingsValue[LanguageKey]]);
+  const tabs: Tabs = {
+    [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: themeSettingsContent },
+    [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: languageSettingsContent }
+  };
 
   function handleReset() {
     setSettingsValue({
-      theme: themeContext.value,
-      language: languageContext.value
+      [ThemeKey]: themeContext.value,
+      [LanguageKey]: languageContext.value
     });
   }
 
   function getThemeSettingsContent() {
     return (
-      <form
+      <Form
+        content={
+          <RadioButtonsList
+            Boxes={Object.values(PossibleThemesEnum).map((theme) => ({
+              label: ts[theme],
+              value: theme
+            }))}
+            Name={ThemeKey}
+            OnChange={(value: string) => {
+              isValidTheme(value) && setSettingsValue({ ...settingsValue, [ThemeKey]: value });
+            }}
+            CheckedValue={settingsValue[ThemeKey]}
+          />
+        }
         onSubmit={(e) => {
           e.preventDefault();
-          themeContext.setValue(settingsValue.theme);
-          Cookies.set(ThemeKey, settingsValue.theme, { sameSite: "Strict", secure: true });
-        }}>
-        <p>To Change Later</p>
-        <RadioButtonsList
-          Boxes={Object.values(PossibleThemesEnum).map((theme) => ({
-            label: ts[theme],
-            value: theme
-          }))}
-          Name={ThemeKey}
-          CheckedValue={settingsValue.theme}
-          OnChange={(value: string) => {
-            isValidTheme(value) && setSettingsValue({ ...settingsValue, theme: value });
-          }}
-        />
-        <button type="submit">Save changes</button>
-        <button type="button" onClick={handleReset}>
-          Discard changes
-        </button>
-      </form>
+          themeContext.setValue(settingsValue[ThemeKey]);
+          setThemeCookie(settingsValue[ThemeKey]);
+        }}
+        handleReset={handleReset}
+      />
     );
   }
 
   function getLanguageSettingsContent() {
     return (
-      <form
+      <Form
+        content={
+          <RadioButtonsList
+            Boxes={Object.values(PossibleLanguagesEnum).map((language) => ({
+              label: ts[language],
+              value: language
+            }))}
+            Name={LanguageKey}
+            OnChange={(value: string) => {
+              isValidLanguage(value) && setSettingsValue({ ...settingsValue, [LanguageKey]: value });
+            }}
+            CheckedValue={settingsValue[LanguageKey]}
+          />
+        }
         onSubmit={(e) => {
           e.preventDefault();
-          languageContext.setValue(settingsValue.language);
-          Cookies.set(LanguageKey, settingsValue.language, { sameSite: "Strict", secure: true });
-        }}>
-        <p>To Change Later</p>
-        <RadioButtonsList
-          Boxes={Object.values(PossibleLanguagesEnum).map((language) => ({
-            label: ts[language],
-            value: language
-          }))}
-          Name={LanguageKey}
-          CheckedValue={settingsValue.language}
-          OnChange={(value: string) => {
-            isValidLanguage(value) && setSettingsValue({ ...settingsValue, language: value });
-          }}
-        />
-        <button type="submit">Save changes</button>
-        <button type="button" onClick={handleReset}>
-          Discard changes
-        </button>
-      </form>
+          languageContext.setValue(settingsValue[LanguageKey]);
+          setLanguageCookie(settingsValue[LanguageKey]);
+        }}
+        handleReset={handleReset}
+      />
     );
   }
 
@@ -108,11 +111,11 @@ const Settings: React.FC = () => {
     <section className="settings">
       <h2>{ts.settingsTitle}</h2>
       <TabsMenu
-        Tabs={tabs}
-        InitialTab={tabs.findIndex((tab) => tab.key === setting)}
-        OnTabChange={(tab: SettingsTab) => {
+        Tabs={Object.values(tabs)}
+        InitialTab={Object.values(tabs).findIndex((tab) => tab.id === setting)}
+        OnTabChange={(tab: TabInterface) => {
           handleReset();
-          navigate(`/Settings/${tab.key}`);
+          navigate(`/Settings/${tab.id}`);
         }}
       />
     </section>

@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Translator } from "utils/constants/language/translator/translator.constants";
-import { LanguageContext } from "utils/contexts/contexts.utils";
+import { LanguageContext } from "utils/language.utils";
+import Translator from "utils/translator/translator.utils";
 
 /**
  * Information page about the website.

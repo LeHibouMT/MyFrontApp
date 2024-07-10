@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-interface Tab {
+export interface TabInterface<K extends string | number = string> {
+  id: K;
   title: string;
   content: React.ReactNode;
-  key: string;
 }
 
 /**
@@ -13,17 +13,18 @@ interface Tab {
  * @param OnTabChange Optional function called after changing tab.
  */
 const TabsMenu: React.FC<{
-  Tabs: Tab[];
+  Tabs: TabInterface[];
   InitialTab?: number;
-  OnTabChange?: (tab: Tab) => void;
+  OnTabChange?: (tab: TabInterface) => void;
 }> = (props) => {
   const [tabNumber, setTabNumber] = useState<number>(props.InitialTab && props.InitialTab > 0 ? props.InitialTab : 0);
 
-  function getTabsMenuHeader() {
-    return (
+  const menuHeader = useMemo(
+    () => (
       <div className="tabs__menu__header">
         {props.Tabs.map((tab, index) => (
           <div
+            id={tab.id}
             className={`tab--${tabNumber === index ? "active" : "inactive"}`}
             onClick={() => {
               setTabNumber(index);
@@ -34,13 +35,14 @@ const TabsMenu: React.FC<{
           </div>
         ))}
       </div>
-    );
-  }
+    ),
+    [tabNumber]
+  );
 
   return (
-    props.Tabs.length >= 0 && (
+    props.Tabs.length > 0 && (
       <div className="tabs__menu">
-        {getTabsMenuHeader()}
+        {menuHeader}
         <div className="tabs__menu__content">{props.Tabs[tabNumber].content}</div>
       </div>
     )

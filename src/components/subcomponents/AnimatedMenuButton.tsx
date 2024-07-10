@@ -2,7 +2,7 @@
  * Animated button.
  * @param checked true if the button is active.
  */
-const AnimatedMenuButton: React.FC<boolean> = (checked) => {
+const AnimatedMenuButton: React.FC<{ checked: boolean }> = (props) => {
   return (
     <input
       type="checkbox"
@@ -10,7 +10,7 @@ const AnimatedMenuButton: React.FC<boolean> = (checked) => {
       aria-label="Animated menu button"
       aria-description="Made by Temani Afif"
       className="animated__menu__button"
-      checked={checked}
+      checked={props.checked}
       readOnly={true}
     />
   );

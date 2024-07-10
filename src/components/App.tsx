@@ -2,12 +2,9 @@ import "components/Styles";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import useMediaQuery from "hooks/useMediaQuery";
-import Cookies from "js-cookie";
-import PossibleLanguagesEnum, { LanguageKey } from "utils/constants/language/language.constants";
-import PossibleThemesEnum, { ThemeKey } from "utils/constants/theme.constants";
-import { LanguageContext, ThemeContext } from "utils/contexts/contexts.utils";
-import PossibleLanguages, { isValidLanguage } from "utils/types/language/language.types";
-import PossibleThemes, { isValidTheme } from "utils/types/theme.types";
+import { PossiblePathsEnum } from "utils/constants.utils";
+import PossibleLanguages, { DefaultLanguage, getLanguageCookie, LanguageContext } from "utils/language.utils";
+import PossibleThemes, { DefaultTheme, getThemeCookie, PossibleThemesEnum, ThemeContext } from "utils/theme.utils";
 import About from "./About";
 import Error from "./Error";
 import Footer from "./Footer";
@@ -29,22 +26,13 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<PossibleLanguages>(getLanguage());
 
   function getTheme(): PossibleThemes {
-    const themeCookie = Cookies.get(ThemeKey);
-    if (themeCookie && isValidTheme(themeCookie)) {
-      return themeCookie;
-    }
-    if (prefersDarkThemeQuery) {
-      return PossibleThemesEnum.dark;
-    }
-    return PossibleThemesEnum.light;
+    const themeCookie = getThemeCookie();
+    return themeCookie ? themeCookie : prefersDarkThemeQuery ? PossibleThemesEnum.dark : DefaultTheme;
   }
 
   function getLanguage(): PossibleLanguages {
-    const languageCookie = Cookies.get(LanguageKey);
-    if (languageCookie && isValidLanguage(languageCookie)) {
-      return languageCookie;
-    }
-    return PossibleLanguagesEnum.english;
+    const languageCookie = getLanguageCookie();
+    return languageCookie ?? DefaultLanguage;
   }
 
   useEffect(() => {
@@ -59,10 +47,10 @@ const App: React.FC = () => {
           <section className="banner--left"></section>
           <main className="content">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/About" element={<About />} />
-              <Route path="/Settings/:setting?" element={<Settings />} />
-              <Route path="*" element={<Error />} />
+              <Route path={PossiblePathsEnum.default} element={<Home />} />
+              <Route path={PossiblePathsEnum.about} element={<About />} />
+              <Route path={`${PossiblePathsEnum.settings}/:setting?`} element={<Settings />} />
+              <Route path={PossiblePathsEnum.error} element={<Error />} />
             </Routes>
           </main>
           <section className="banner--right"></section>
