@@ -1,121 +1,164 @@
-import { useContext, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
-import PossibleLanguagesEnum, { LanguageKey } from "utils/constants/language/language.constants";
-import { Translator } from "utils/constants/language/translator/translator.constants";
-import PossibleThemesEnum, { ThemeKey } from "utils/constants/theme.constants";
-import { LanguageContext, ThemeContext } from "utils/contexts/contexts.utils";
-import PossibleLanguages, { isValidLanguage } from "utils/types/language/language.types";
-import PossibleThemes, { isValidTheme } from "utils/types/theme.types";
+import { useContext, useState } from "react";
+import { useBlocker, useNavigate, useParams } from "react-router-dom";
+import useTranslation from "hooks/useTranslation";
+import { areSameString } from "utils/functions.utils";
+import {
+  PossibleLanguagesEnum,
+  isValidLanguage,
+  LanguageContext,
+  LanguageKey,
+  setLanguageCookie,
+  PossibleLanguages
+} from "utils/language.utils";
+import {
+  isValidTheme,
+  PossibleThemes,
+  PossibleThemesEnum,
+  setThemeCookie,
+  ThemeContext,
+  ThemeKey
+} from "utils/theme.utils";
+import Form from "./subcomponents/Form";
+import Modal from "./subcomponents/Modal";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
-import TabsMenu from "./subcomponents/TabsMenu";
+import TabsMenu, { TabInterface } from "./subcomponents/TabsMenu";
 
-interface SettingsValue {
-  theme: PossibleThemes;
-  language: PossibleLanguages;
-}
+type SettingsValue = {
+  [ThemeKey]: PossibleThemes;
+  [LanguageKey]: PossibleLanguages;
+};
 
-interface SettingsTab {
-  title: string;
-  content: React.ReactNode;
-  key: string;
-}
+type SettingsKeys = keyof SettingsValue;
+
+type Tabs = {
+  [S in SettingsKeys]: TabInterface<S>;
+};
 
 /**
  * Settings page, you can change your theme and language with this component.
+ * @returns The component.
  */
 const Settings: React.FC = () => {
   const { setting } = useParams();
   const navigate = useNavigate();
+  const ts = useTranslation();
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.value];
   const [settingsValue, setSettingsValue] = useState<SettingsValue>({
-    theme: themeContext.value,
-    language: languageContext.value
+    [ThemeKey]: themeContext.value,
+    [LanguageKey]: languageContext.value
   });
-  const themeSettingsContent = useMemo(() => getThemeSettingsContent(), [ts, settingsValue.theme]);
-  const languageSettingsContent = useMemo(() => getLanguageSettingsContent(), [ts, settingsValue.language]);
-  const tabs: SettingsTab[] = [
-    { title: ts.themeSettingsTitle, content: themeSettingsContent, key: ThemeKey },
-    { title: ts.languageSettingsTitle, content: languageSettingsContent, key: LanguageKey }
-  ];
-
-  function handleReset() {
-    setSettingsValue({
-      theme: themeContext.value,
-      language: languageContext.value
-    });
-  }
-
+  const [haveUnsavedChanges, setHaveUnsavedChanges] = useState<boolean>(false);
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => haveUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
+  );
+  const tabs: Tabs = {
+    [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
+    [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
+  };
   function getThemeSettingsContent() {
+    const key = ThemeKey;
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          themeContext.setValue(settingsValue.theme);
-          Cookies.set(ThemeKey, settingsValue.theme, { sameSite: "Strict", secure: true });
-        }}>
-        <p>To Change Later</p>
-        <RadioButtonsList
-          Boxes={Object.values(PossibleThemesEnum).map((theme) => ({
-            label: ts[theme],
-            value: theme
-          }))}
-          Name={ThemeKey}
-          CheckedValue={settingsValue.theme}
-          OnChange={(value: string) => {
-            isValidTheme(value) && setSettingsValue({ ...settingsValue, theme: value });
-          }}
-        />
-        <button type="submit">Save changes</button>
-        <button type="button" onClick={handleReset}>
-          Discard changes
-        </button>
-      </form>
+      <Form
+        content={
+          <RadioButtonsList
+            boxes={Object.values(PossibleThemesEnum).map((theme) => ({
+              label: ts[theme],
+              value: theme
+            }))}
+            name={key}
+            checked={settingsValue[key]}
+            onChange={(value) => {
+              if (isValidTheme(value)) {
+                setSettingsValue({ ...settingsValue, [key]: value });
+                if (value === themeContext.value) {
+                  setHaveUnsavedChanges(false);
+                } else {
+                  setHaveUnsavedChanges(true);
+                }
+              }
+            }}
+          />
+        }
+        onSubmitData={(formData: FormData) => {
+          const data = formData.get(key);
+          if (data && isValidTheme(data)) {
+            data && themeContext.setValue(data);
+            setThemeCookie(data);
+            setHaveUnsavedChanges(false);
+          }
+        }}
+        handleReset={() => {
+          setSettingsValue({ ...settingsValue, [key]: themeContext.value });
+          setHaveUnsavedChanges(false);
+        }}
+        disabled={!haveUnsavedChanges}
+      />
     );
   }
-
   function getLanguageSettingsContent() {
+    const key = LanguageKey;
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          languageContext.setValue(settingsValue.language);
-          Cookies.set(LanguageKey, settingsValue.language, { sameSite: "Strict", secure: true });
-        }}>
-        <p>To Change Later</p>
-        <RadioButtonsList
-          Boxes={Object.values(PossibleLanguagesEnum).map((language) => ({
-            label: ts[language],
-            value: language
-          }))}
-          Name={LanguageKey}
-          CheckedValue={settingsValue.language}
-          OnChange={(value: string) => {
-            isValidLanguage(value) && setSettingsValue({ ...settingsValue, language: value });
-          }}
-        />
-        <button type="submit">Save changes</button>
-        <button type="button" onClick={handleReset}>
-          Discard changes
-        </button>
-      </form>
+      <Form
+        content={
+          <RadioButtonsList
+            boxes={Object.values(PossibleLanguagesEnum).map((language) => ({
+              label: ts[language],
+              value: language
+            }))}
+            name={key}
+            checked={settingsValue[key]}
+            onChange={(value) => {
+              if (isValidLanguage(value)) {
+                setSettingsValue({ ...settingsValue, [key]: value });
+                if (value === languageContext.value) {
+                  setHaveUnsavedChanges(false);
+                } else {
+                  setHaveUnsavedChanges(true);
+                }
+              }
+            }}
+          />
+        }
+        onSubmitData={(formData: FormData) => {
+          const data = formData.get(key);
+          if (data && isValidLanguage(data)) {
+            data && languageContext.setValue(data);
+            setLanguageCookie(data);
+            setHaveUnsavedChanges(false);
+          }
+        }}
+        handleReset={() => {
+          setSettingsValue({ ...settingsValue, [key]: languageContext.value });
+          setHaveUnsavedChanges(false);
+        }}
+        disabled={!haveUnsavedChanges}
+      />
     );
   }
 
   return (
-    <section className="settings">
+    <div className="settings">
       <h2>{ts.settingsTitle}</h2>
       <TabsMenu
-        Tabs={tabs}
-        InitialTab={tabs.findIndex((tab) => tab.key === setting)}
-        OnTabChange={(tab: SettingsTab) => {
-          handleReset();
-          navigate(`/Settings/${tab.key}`);
+        tabs={Object.values(tabs)}
+        initialTab={Object.keys(tabs).findIndex((key) => areSameString(key, setting))}
+        onTabChange={(tab: TabInterface) => {
+          navigate(`../${tab.id}`, { relative: "path" });
+          if (blocker.state === "blocked") {
+            return false;
+          }
+          return true;
         }}
       />
-    </section>
+      {blocker.state === "blocked" && (
+        <Modal
+          content={ts.unsavedChanges}
+          onClose={blocker.reset}
+          onlyCloseButton={false}
+        />
+      )}
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@
   },
   "plugins": ["@typescript-eslint", "prettier", "import", "react", "react-hooks"],
   "rules": {
-    "indent": ["error", 2],
+    "indent": "off",
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "import/order": [
@@ -68,14 +68,15 @@
     "react/jsx-uses-vars": "error",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/exhaustive-deps": "error",
     "prettier/prettier": [
       "error",
       {
         "endOfLine": "auto",
         "printWidth": 120,
         "trailingComma": "none",
-        "bracketSameLine": true
+        "bracketSameLine": true,
+        "singleAttributePerLine": true
       }
     ]
   },
