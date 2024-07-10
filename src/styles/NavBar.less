@@ -1,99 +1,92 @@
 .navbar {
+  background-color: var(--header-color-background);
+  backdrop-filter: var(--blur);
+
   .menu--static--on,
   .menu--click--on {
     .menu__content {
-      ul {
-        li {
-          padding: 1.6rem 0 1.8rem 0;
-          display: block;
-          align-content: center;
+      ul li {
+        display: block;
+        align-content: center;
 
-          .link {
-            &--active,
-            &--inactive {
-              position: relative;
+        .link--active,
+        .link--inactive {
+          position: relative;
 
-              &::after {
-                content: "";
-                position: absolute;
-                width: 100%;
-                height: 2px;
-                bottom: 0;
-                left: 0;
-                background-color: var(--shining-color-writing);
-                transform: scaleX(0);
-                transform-origin: bottom right;
-                transition: transform 0.5s ease-out;
-              }
-            }
+          &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--shining-color-writing);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.5s ease-out;
           }
+        }
 
-          .link--active {
-            color: var(--shining-color-writing);
+        .link--active {
+          color: var(--shining-color-writing);
+        }
+
+        .link--inactive {
+          color: var(--classic-color-writing);
+        }
+
+        .link--inactive:hover {
+          transition: color 0.3s ease;
+          color: var(--shining-color-writing);
+        }
+
+        &:hover {
+          .link--active,
+          .link--inactive {
+            &::after {
+              transform: scaleX(1);
+              transform-origin: bottom left;
+            }
           }
 
           .link--inactive {
-            color: var(--white);
-          }
-
-          .link--inactive:hover {
             transition: color 0.3s ease;
             color: var(--shining-color-writing);
           }
-
-          &:hover {
-            .link {
-              &--active,
-              &--inactive {
-                &::after {
-                  transform: scaleX(1);
-                  transform-origin: bottom left;
-                }
-              }
-            }
-
-            .link--inactive {
-              transition: color 0.3s ease;
-              color: var(--shining-color-writing);
-            }
-          }
         }
+      }
 
-        &:hover > :not(:hover) {
-          opacity: 0.4;
-        }
+      ul:hover > :not(:hover) {
+        opacity: 0.3;
       }
     }
   }
 
   @media (min-width: 768px) {
-    float: right;
+    border-radius: var(--border-radius-size);
+    margin-top: 2rem;
 
     .menu--static--on {
       .menu__button {
         display: none;
       }
 
-      .menu__content {
-        ul {
-          display: inline-flex;
-          padding-right: 2rem;
+      .menu__content ul {
+        display: inline-flex;
+        padding: 0 1rem;
 
-          li {
-            .link {
-              &--active,
-              &--inactive {
-                margin: 0 1.6rem;
-                font-size: 2.4rem;
-              }
-            }
-          }
+        li {
+          padding: 1rem 0;
+          margin: 0 var(--large-font-size);
         }
       }
     }
   }
 
   @media (max-width: 767px) {
+    width: 100vw;
+    position: absolute;
+
     .menu--click--on,
     .menu--click--off {
       .menu__button {
@@ -103,30 +96,41 @@
     }
 
     .menu--click--on {
+      height: 100vh;
+
       .menu__content {
         border-top: 1px solid var(--shining-color-writing);
+        margin: 0 var(--classic-font-size);
+        padding: var(--classic-font-size) 0;
 
         ul {
           height: auto;
 
           li {
+            padding: 0 1rem;
+            margin: 1rem 0;
             display: flex;
+            border-radius: var(--border-radius-size);
 
-            .link {
-              &--active,
-              &--inactive {
-                font-size: 2rem;
-                margin: 0 2.5rem;
-              }
+            .link--active,
+            .link--inactive {
+              margin: 1rem 0;
+            }
+
+            &:hover {
+              background-color: var(--header-color-background--hover);
             }
           }
 
-          li:hover {
+          li[data-active="true"] {
             background-color: var(--header-color-background--hover);
-            transition: background-color 0.3s ease;
           }
         }
       }
+    }
+
+    .menu--click--off {
+      border-bottom: 1px solid var(--shining-color-writing);
     }
   }
 }

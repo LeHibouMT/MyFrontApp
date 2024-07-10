@@ -5,9 +5,12 @@
   --reef-encounter: #079992;
   --dark-saphire: #0c2461;
   --classic-font-size: 1.8rem;
+  --big-font-size: 2rem;
   --large-font-size: 2.7rem;
   --super-font-size: 3.3rem;
   --extra-font-size: 3.6rem;
+  --border-radius-size: 1.2rem;
+  --blur: blur(20px);
   font-size: 62.5%;
 }
 
@@ -21,7 +24,7 @@
   --classic-color-writing: #010204;
   --shining-color-writing: #ffa502;
   --classic-color-background: #ffffff;
-  --header-color-background: #0e0ea7;
+  --header-color-background: rgba(120, 120, 120, 0.1);
   --header-color-background--hover: #080248;
 }
 
@@ -40,17 +43,9 @@
   grid-template-columns: 1fr min(900px, 100%) 1fr;
   grid-template-rows: auto auto auto;
 
-  .header {
-    grid-column: ~"1/-1";
-  }
-
-  .footer {
-    grid-column: ~"1/-1";
-  }
-
   .content {
     min-height: 100vh;
-    padding: var(--extra-font-size) 7.5%;
+    padding: 6rem 7.5%;
   }
 
   @media (min-width: 1025px) {

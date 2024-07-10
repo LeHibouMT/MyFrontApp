@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useMediaQuery from "hooks/useMediaQuery";
 import { Translator } from "utils/constants/language/translator/translator.constants";
@@ -42,7 +42,10 @@ const NavBar: React.FC = () => {
   const Content = (
     <ul>
       {LinksList.map((menuElement, index) => (
-        <li key={index} onClick={() => navigate(menuElement.path)}>
+        <li
+          key={index}
+          onClick={() => navigate(menuElement.path)}
+          data-active={currentPage.toLowerCase() === menuElement.path.toLowerCase()}>
           <div
             className={`link--${currentPage.toLowerCase() === menuElement.path.toLowerCase() ? "active" : "inactive"}`}>
             {menuElement.label}
@@ -51,6 +54,10 @@ const NavBar: React.FC = () => {
       ))}
     </ul>
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   return (
     <nav className={"navbar"}>
