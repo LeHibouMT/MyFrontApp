@@ -112,6 +112,8 @@ main {
   top: 50%;
   // this transform the div so that half is above the the position Y, half below the position Y, with the previous style, it centers the div inside its parent element.
   transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
 }
 
 // center div horizontally
@@ -139,11 +141,15 @@ a::after {
   left: 0;
   background-color: black;
   transform: scaleX(0);
+  -webkit-transition: scaleX(0);
+  -moz-transition: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
 // and this is needed too:
 a:hover::after {
   transform: scaleX(1);
+  -webkit-transition: scaleX(1);
+  -moz-transition: scaleX(1);
   transform-origin: bottom left;
 }

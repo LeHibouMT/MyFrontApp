@@ -15,7 +15,7 @@ export enum PossibleThemesEnum {
 /**
  * Type of possible themes, useful for type checking and inference.
  */
-type PossibleThemes = `${PossibleThemesEnum}`;
+export type PossibleThemes = `${PossibleThemesEnum}`;
 
 // #endregion
 
@@ -44,10 +44,12 @@ export const ThemeContext = createContext<ContextInterface<PossibleThemes>>({
 // #region functions
 
 /**
- * Function to verify if a string is equal to a key associated to a theme.
+ * Function to verify if a value is equal to a key associated to a theme.
+ * @param value The value to check.
+ * @returns Type guard boolean for PossibleThemes.
  */
-export function isValidTheme(value: string): value is PossibleThemes {
-  return (Object.values(PossibleThemesEnum) as string[]).includes(value);
+export function isValidTheme(value: unknown): value is PossibleThemes {
+  return typeof value === "string" && (Object.values(PossibleThemesEnum) as string[]).includes(value);
 }
 
 /**
@@ -67,5 +69,3 @@ export function setThemeCookie(value: PossibleThemes) {
 }
 
 // #endregion
-
-export default PossibleThemes;

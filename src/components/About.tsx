@@ -1,13 +1,11 @@
-import { useContext } from "react";
-import { LanguageContext } from "utils/language.utils";
-import Translator from "utils/translator/translator.utils";
+import useTranslation from "hooks/useTranslation";
 
 /**
  * Information page about the website.
+ * @returns The component.
  */
 const About: React.FC = () => {
-  const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.value];
+  const ts = useTranslation();
 
   return (
     <div className="about">

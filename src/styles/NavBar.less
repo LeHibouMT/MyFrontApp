@@ -1,9 +1,8 @@
 .navbar {
-  background-color: var(--header-color-background);
+  background-color: var(--third-color-background);
   backdrop-filter: var(--blur);
 
-  .menu--static--on,
-  .menu--click--on {
+  .menu--on {
     .menu__content {
       ul li {
         display: block;
@@ -41,6 +40,8 @@
         }
 
         &:hover {
+          cursor: pointer;
+
           .link--active,
           .link--inactive {
             &::after {
@@ -63,22 +64,33 @@
   }
 
   @media (min-width: 768px) {
+    border: var(--thin-border) var(--border-color-navbar);
     border-radius: var(--border-radius-size);
     margin-top: 2rem;
 
-    .menu--static--on {
+    .menu--on {
       .menu__button {
         display: none;
       }
 
-      .menu__content ul {
-        display: inline-flex;
-        padding: 0 1rem;
+      .menu__content {
+        display: flex;
+        align-items: center;
         min-width: 40vw;
-        justify-content: space-around;
 
-        li {
-          padding: 1rem 0;
+        .close__button {
+          flex: 1;
+        }
+
+        ul {
+          flex: 9;
+          display: inline-flex;
+          padding: 0 1rem;
+          justify-content: space-around;
+
+          li {
+            padding: 1rem 0;
+          }
         }
       }
     }
@@ -88,15 +100,15 @@
     width: 100vw;
     position: absolute;
 
-    .menu--click--on,
-    .menu--click--off {
+    .menu--on,
+    .menu--off {
       .menu__button {
         display: inline-flex;
         padding: 1.4rem 0;
       }
     }
 
-    .menu--click--on {
+    .menu--on {
       height: 100vh;
 
       .menu__content {
@@ -119,18 +131,18 @@
             }
 
             &:hover {
-              background-color: var(--header-color-background--hover);
+              background-color: var(--fourth-color-background);
             }
-          }
 
-          li[data-active="true"] {
-            background-color: var(--header-color-background--hover);
+            &[data-active="true"] {
+              background-color: var(--fourth-color-background);
+            }
           }
         }
       }
     }
 
-    .menu--click--off {
+    .menu--off {
       border-bottom: 1px solid var(--shining-color-writing);
     }
   }

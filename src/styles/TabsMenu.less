@@ -1,12 +1,23 @@
 .tabs__menu {
+  border: var(--classic-border) var(--fourth-color-background);
+  border-radius: var(--border-radius-size);
+  background-color: var(--third-color-background);
+
   .tabs__menu__header {
     display: inline-flex;
     width: 100%;
+    border-bottom: var(--classic-border) var(--fourth-color-background);
 
     > * {
       text-align: center;
       flex: 1;
-      border: 1px solid var(--classic-color-writing);
+      padding: calc(var(--classic-font-size) / 2);
+      color: var(--classic-color-writing);
+      cursor: pointer;
+    }
+
+    > :not(:last-child) {
+      border-right: var(--classic-border) var(--fourth-color-background);
     }
   }
 }

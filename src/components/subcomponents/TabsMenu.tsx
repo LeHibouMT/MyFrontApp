@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface TabInterface<K extends string | number = string> {
   id: K;
@@ -8,42 +8,40 @@ export interface TabInterface<K extends string | number = string> {
 
 /**
  * This is a menu component with multiple tabs.
- * @param Tabs Array of tabs, each tab should have a title and a content.
- * @param InitialTab Optional initial tab.
- * @param OnTabChange Optional function called after changing tab.
+ * @param tabs Array of tabs, each tab should have a title and a content.
+ * @param initialTab Optional initial tab.
+ * @param onTabChange Optional function called after changing tab.
+ * @returns The component.
  */
 const TabsMenu: React.FC<{
-  Tabs: TabInterface[];
-  InitialTab?: number;
-  OnTabChange?: (tab: TabInterface) => void;
+  tabs: TabInterface[];
+  initialTab?: number;
+  onTabChange?: (tab: TabInterface) => void;
 }> = (props) => {
-  const [tabNumber, setTabNumber] = useState<number>(props.InitialTab && props.InitialTab > 0 ? props.InitialTab : 0);
+  const [tabNumber, setTabNumber] = useState<number>(props.initialTab && props.initialTab > 0 ? props.initialTab : 0);
 
-  const menuHeader = useMemo(
-    () => (
-      <div className="tabs__menu__header">
-        {props.Tabs.map((tab, index) => (
-          <div
-            id={tab.id}
-            className={`tab--${tabNumber === index ? "active" : "inactive"}`}
-            onClick={() => {
-              setTabNumber(index);
-              props.OnTabChange?.(tab);
-            }}
-            key={index}>
-            {tab.title}
-          </div>
-        ))}
-      </div>
-    ),
-    [tabNumber]
-  );
+  useEffect(() => {
+    setTabNumber(props.initialTab && props.initialTab > 0 ? props.initialTab : 0);
+  }, [props.initialTab]);
 
   return (
-    props.Tabs.length > 0 && (
+    props.tabs.length && (
       <div className="tabs__menu">
-        {menuHeader}
-        <div className="tabs__menu__content">{props.Tabs[tabNumber].content}</div>
+        <div className="tabs__menu__header">
+          {props.tabs.map((tab, index) => (
+            <div
+              id={tab.id}
+              className={`tab--${tabNumber === index ? "active" : "inactive"}`}
+              onClick={() => {
+                setTabNumber(index);
+                props.onTabChange?.(tab);
+              }}
+              key={index}>
+              {tab.title}
+            </div>
+          ))}
+        </div>
+        <div className="tabs__menu__content">{props.tabs[tabNumber].content}</div>
       </div>
     )
   );

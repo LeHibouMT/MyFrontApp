@@ -1,2 +1,29 @@
 .settings {
+  .tabs__menu {
+    margin-top: var(--extra-font-size);
+
+    .tabs__menu__content {
+      form .form__content__container {
+        border-bottom: var(--classic-border) var(--fourth-color-background);
+        color: var(--classic-color-writing);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .radio__button__container {
+          padding: 1rem;
+          border-radius: var(--border-radius-size);
+
+          &[data-active="false"] {
+            background-color: var(--third-color-background);
+          }
+
+          &[data-active="true"] {
+            background-color: var(--fourth-color-background);
+            border: var(--thin-border) var(--shining-color-writing);
+          }
+        }
+      }
+    }
+  }
 }

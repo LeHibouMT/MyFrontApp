@@ -14,5 +14,6 @@
   "editor.mouseWheelZoom": false,
   "terminal.integrated.mouseWheelZoom": false,
   "window.zoomPerWindow": true,
-  "window.zoomLevel": 0
+  "window.zoomLevel": 0,
+  "prettier.singleAttributePerLine": true
 }

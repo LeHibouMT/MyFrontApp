@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import Cookies from "js-cookie";
-import PossibleThemesEnum from "./theme.utils";
+import { PossibleThemesEnum } from "./theme.utils";
 import { ContextInterface } from "./types.utils";
 
 // #region types
@@ -16,7 +16,7 @@ export enum PossibleLanguagesEnum {
 /**
  * Type of possible languages, useful for type checking and inference.
  */
-type PossibleLanguages = `${PossibleLanguagesEnum}`;
+export type PossibleLanguages = `${PossibleLanguagesEnum}`;
 
 /**
  * All possible word keys for the translation type below.
@@ -76,10 +76,12 @@ export const LanguageContext = createContext<ContextInterface<PossibleLanguages>
 // #region functions
 
 /**
- * Function to verify if a string is equal to a key associated to a language.
+ * Function to verify if a value is equal to a key associated to a language.
+ * @param value The value to check.
+ * @returns Type guard boolean for PossibleLanguages.
  */
-export function isValidLanguage(value: string): value is PossibleLanguages {
-  return (Object.values(PossibleLanguagesEnum) as string[]).includes(value);
+export function isValidLanguage(value: unknown): value is PossibleLanguages {
+  return typeof value === "string" && (Object.values(PossibleLanguagesEnum) as string[]).includes(value);
 }
 
 /**
@@ -99,5 +101,3 @@ export function setLanguageCookie(value: PossibleLanguages) {
 }
 
 // #endregion
-
-export default PossibleLanguages;

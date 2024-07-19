@@ -5,5 +5,7 @@ export enum PossiblePathsEnum {
   about = "About",
   default = "",
   error = "*",
-  settings = "Settings"
+  languageSettings = "Settings/Language",
+  settings = "Settings",
+  themeSettings = "Settings/Theme"
 }

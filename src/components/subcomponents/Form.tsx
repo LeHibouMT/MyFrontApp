@@ -1,27 +1,45 @@
-import { FormEventHandler, useContext } from "react";
-import { LanguageContext } from "utils/language.utils";
-import Translator from "utils/translator/translator.utils";
+import useTranslation from "hooks/useTranslation";
 
 /**
  * Form component.
  * @param content Content of the form, should have inputs at the top level.
- * @param onSubmit Function to execute when clicking on the submit button.
- * @param handleReset Function to execute when clicking on the cancel button.
+ * @param onSubmitData Function to execute with data on submit.
+ * @param handleReset Optional function to execute when clicking on the cancel button.
+ * @param disabled Optional boolean, true if buttons should be disabled.
+ * @returns The component.
  */
 const Form: React.FC<{
   content: React.ReactNode;
-  onSubmit: FormEventHandler<HTMLFormElement>;
-  handleReset: () => void;
+  onSubmitData: (formdata: FormData) => void;
+  handleReset?: () => void;
+  disabled?: boolean;
 }> = (props) => {
-  const languageContext = useContext(LanguageContext);
-  const ts = Translator[languageContext.value];
+  const ts = useTranslation();
+
   return (
-    <form onSubmit={props.onSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.target as HTMLFormElement);
+        if (!data) {
+          throw Error("no data");
+        }
+        props.onSubmitData(data);
+      }}>
       {props.content}
-      <button type="submit">{ts.submitButtonLabel}</button>
-      <button type="button" onClick={props.handleReset}>
-        {ts.cancelButtonLabel}
-      </button>
+      <div className="form__button__container">
+        <button
+          type="submit"
+          disabled={props.disabled}>
+          {ts.submitButtonLabel}
+        </button>
+        <button
+          type={props.handleReset ? "button" : "reset"}
+          onClick={props.handleReset}
+          disabled={props.disabled}>
+          {ts.cancelButtonLabel}
+        </button>
+      </div>
     </form>
   );
 };

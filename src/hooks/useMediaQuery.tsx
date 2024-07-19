@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 /**
  * Hook to make media queries.
  * @param query The query.
+ * @returns The boolean result from the query.
  */
 function useMediaQuery(query: string) {
   const [matches, setMatches] = useState<boolean>(window.matchMedia(query).matches);
