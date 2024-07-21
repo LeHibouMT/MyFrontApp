@@ -14,6 +14,7 @@ import "../styles/Header.less";
 import "../styles/Home.less";
 import "../styles/NavBar.less";
 import "../styles/Menu.less";
+import "../styles/Modal.less";
 import "../styles/RadioButtonsList.less";
 import "../styles/Settings.less";
 import "../styles/Signature.less";

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useBlocker, useNavigate, useParams } from "react-router-dom";
 import useTranslation from "hooks/useTranslation";
 import { areSameString } from "utils/functions.utils";
 import {
@@ -19,6 +19,7 @@ import {
   ThemeKey
 } from "utils/theme.utils";
 import Form from "./subcomponents/Form";
+import Modal from "./subcomponents/Modal";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
 import TabsMenu, { TabInterface } from "./subcomponents/TabsMenu";
 
@@ -47,6 +48,11 @@ const Settings: React.FC = () => {
     [ThemeKey]: themeContext.value,
     [LanguageKey]: languageContext.value
   });
+  const [haveUnsavedChanges, setHaveUnsavedChanges] = useState<boolean>(false);
+  const tabs: Tabs = {
+    [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
+    [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
+  };
   function getThemeSettingsContent() {
     const key = ThemeKey;
     return (
@@ -62,6 +68,11 @@ const Settings: React.FC = () => {
             onChange={(value) => {
               if (isValidTheme(value)) {
                 setSettingsValue({ ...settingsValue, [key]: value });
+                if (value === themeContext.value) {
+                  setHaveUnsavedChanges(false);
+                } else {
+                  setHaveUnsavedChanges(true);
+                }
               }
             }}
           />
@@ -76,9 +87,13 @@ const Settings: React.FC = () => {
           }
           themeContext.setValue(data);
           setThemeCookie(data);
+          setHaveUnsavedChanges(false);
         }}
-        handleReset={() => setSettingsValue({ ...settingsValue, [key]: themeContext.value })}
-        disabled={settingsValue[key] === themeContext.value}
+        handleReset={() => {
+          setSettingsValue({ ...settingsValue, [key]: themeContext.value });
+          setHaveUnsavedChanges(false);
+        }}
+        disabled={!haveUnsavedChanges}
       />
     );
   }
@@ -97,6 +112,11 @@ const Settings: React.FC = () => {
             onChange={(value) => {
               if (isValidLanguage(value)) {
                 setSettingsValue({ ...settingsValue, [key]: value });
+                if (value === languageContext.value) {
+                  setHaveUnsavedChanges(false);
+                } else {
+                  setHaveUnsavedChanges(true);
+                }
               }
             }}
           />
@@ -111,16 +131,19 @@ const Settings: React.FC = () => {
           }
           languageContext.setValue(data);
           setLanguageCookie(data);
+          setHaveUnsavedChanges(false);
         }}
-        handleReset={() => setSettingsValue({ ...settingsValue, [key]: languageContext.value })}
-        disabled={settingsValue[key] === languageContext.value}
+        handleReset={() => {
+          setSettingsValue({ ...settingsValue, [key]: languageContext.value });
+          setHaveUnsavedChanges(false);
+        }}
+        disabled={!haveUnsavedChanges}
       />
     );
   }
-  const tabs: Tabs = {
-    [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
-    [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
-  };
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => haveUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
+  );
 
   return (
     <div className="settings">
@@ -130,8 +153,18 @@ const Settings: React.FC = () => {
         initialTab={Object.keys(tabs).findIndex((key) => areSameString(key, setting))}
         onTabChange={(tab: TabInterface) => {
           navigate(`../${tab.id}`, { relative: "path" });
+          if (blocker.state === "blocked") {
+            return true;
+          }
+          return false;
         }}
       />
+      {blocker.state === "blocked" && (
+        <Modal
+          content={ts.unsavedChanges}
+          onClose={blocker.reset}
+        />
+      )}
     </div>
   );
 };

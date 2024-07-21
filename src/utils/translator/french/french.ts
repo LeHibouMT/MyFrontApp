@@ -18,6 +18,7 @@ const French: Translation = {
   settingsTitle: "Paramètres",
   submitButtonLabel: "Confirmer",
   themeSettingsTitle: "Thème",
+  unsavedChanges: "Vous avez des modifications non sauvegardées, veuillez les confirmer ou les annuler.",
   welcome: "Accueil"
 };
 

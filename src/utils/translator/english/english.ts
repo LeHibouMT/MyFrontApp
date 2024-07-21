@@ -18,6 +18,7 @@ const English: Translation = {
   settingsTitle: "Settings",
   submitButtonLabel: "Confirm",
   themeSettingsTitle: "Theme",
+  unsavedChanges: "You have unsaved changes, please confirm or cancel changes.",
   welcome: "Home"
 };
 

@@ -33,6 +33,7 @@ type PossibleWordKeys =
   | "settingsTitle"
   | "submitButtonLabel"
   | "themeSettingsTitle"
+  | "unsavedChanges"
   | "welcome";
 
 /**

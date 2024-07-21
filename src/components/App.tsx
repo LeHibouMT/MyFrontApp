@@ -24,12 +24,11 @@ import Settings from "./Settings";
 const App: React.FC = () => {
   const prefersDarkThemeQuery = useMediaQuery("(prefers-color-scheme: dark)");
   const [theme, setTheme] = useState<PossibleThemes>(
-    getThemeCookie() ?? prefersDarkThemeQuery ? PossibleThemesEnum.dark : DefaultTheme
+    getThemeCookie() ?? (prefersDarkThemeQuery ? PossibleThemesEnum.dark : DefaultTheme)
   );
   const [language, setLanguage] = useState<PossibleLanguages>(getLanguageCookie() ?? DefaultLanguage);
-
   useEffect(() => {
-    setTheme(getThemeCookie() ?? prefersDarkThemeQuery ? PossibleThemesEnum.dark : DefaultTheme);
+    setTheme(getThemeCookie() ?? (prefersDarkThemeQuery ? PossibleThemesEnum.dark : DefaultTheme));
   }, [prefersDarkThemeQuery]);
 
   return (

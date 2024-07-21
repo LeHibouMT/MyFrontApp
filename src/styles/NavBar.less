@@ -7,6 +7,7 @@
       ul li {
         display: block;
         align-content: center;
+        transition: opacity 0.3s;
 
         .link--active,
         .link--inactive {
@@ -22,7 +23,7 @@
             background-color: var(--shining-color-writing);
             transform: scaleX(0);
             transform-origin: bottom right;
-            transition: transform 0.5s ease-out;
+            transition: transform 0.5s ease-in 0.1s;
           }
         }
 
@@ -51,13 +52,13 @@
           }
 
           .link--inactive {
-            transition: color 0.3s ease;
+            transition: color 0.3s;
             color: var(--shining-color-writing);
           }
         }
       }
 
-      ul:hover > :not(:hover) {
+      ul:has(:hover) > :not(:hover) {
         opacity: 0.3;
       }
     }

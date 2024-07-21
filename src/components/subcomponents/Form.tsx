@@ -2,7 +2,7 @@ import useTranslation from "hooks/useTranslation";
 
 /**
  * Form component.
- * @param content Content of the form, should have inputs at the top level.
+ * @param content Content of the form.
  * @param onSubmitData Function to execute with data on submit.
  * @param handleReset Optional function to execute when clicking on the cancel button.
  * @param disabled Optional boolean, true if buttons should be disabled.

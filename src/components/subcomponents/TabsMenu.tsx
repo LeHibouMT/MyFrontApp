@@ -10,13 +10,13 @@ export interface TabInterface<K extends string | number = string> {
  * This is a menu component with multiple tabs.
  * @param tabs Array of tabs, each tab should have a title and a content.
  * @param initialTab Optional initial tab.
- * @param onTabChange Optional function called after changing tab.
+ * @param onTabChange Optional function called after trying to change tab, return a boolean, true if the tab should change.
  * @returns The component.
  */
 const TabsMenu: React.FC<{
   tabs: TabInterface[];
   initialTab?: number;
-  onTabChange?: (tab: TabInterface) => void;
+  onTabChange?: (tab: TabInterface) => boolean;
 }> = (props) => {
   const [tabNumber, setTabNumber] = useState<number>(props.initialTab && props.initialTab > 0 ? props.initialTab : 0);
 
@@ -33,8 +33,9 @@ const TabsMenu: React.FC<{
               id={tab.id}
               className={`tab--${tabNumber === index ? "active" : "inactive"}`}
               onClick={() => {
-                setTabNumber(index);
-                props.onTabChange?.(tab);
+                if (!props.onTabChange || props.onTabChange?.(tab)) {
+                  setTabNumber(index);
+                }
               }}
               key={index}>
               {tab.title}
