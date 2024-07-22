@@ -49,6 +49,9 @@ const Settings: React.FC = () => {
     [LanguageKey]: languageContext.value
   });
   const [haveUnsavedChanges, setHaveUnsavedChanges] = useState<boolean>(false);
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) => haveUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
+  );
   const tabs: Tabs = {
     [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
     [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
@@ -79,15 +82,11 @@ const Settings: React.FC = () => {
         }
         onSubmitData={(formData: FormData) => {
           const data = formData.get(key);
-          if (!data) {
-            throw Error("theme missing from data");
+          if (data && isValidTheme(data)) {
+            data && themeContext.setValue(data);
+            setThemeCookie(data);
+            setHaveUnsavedChanges(false);
           }
-          if (!isValidTheme(data)) {
-            throw Error("invalid theme value");
-          }
-          themeContext.setValue(data);
-          setThemeCookie(data);
-          setHaveUnsavedChanges(false);
         }}
         handleReset={() => {
           setSettingsValue({ ...settingsValue, [key]: themeContext.value });
@@ -121,17 +120,13 @@ const Settings: React.FC = () => {
             }}
           />
         }
-        onSubmitData={(formdata) => {
-          const data = formdata.get(key);
-          if (!data) {
-            throw Error("language missing from data");
+        onSubmitData={(formData: FormData) => {
+          const data = formData.get(key);
+          if (data && isValidLanguage(data)) {
+            data && languageContext.setValue(data);
+            setLanguageCookie(data);
+            setHaveUnsavedChanges(false);
           }
-          if (!isValidLanguage(data)) {
-            throw Error("invalid language value");
-          }
-          languageContext.setValue(data);
-          setLanguageCookie(data);
-          setHaveUnsavedChanges(false);
         }}
         handleReset={() => {
           setSettingsValue({ ...settingsValue, [key]: languageContext.value });
@@ -141,9 +136,6 @@ const Settings: React.FC = () => {
       />
     );
   }
-  const blocker = useBlocker(
-    ({ currentLocation, nextLocation }) => haveUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
-  );
 
   return (
     <div className="settings">
@@ -154,15 +146,16 @@ const Settings: React.FC = () => {
         onTabChange={(tab: TabInterface) => {
           navigate(`../${tab.id}`, { relative: "path" });
           if (blocker.state === "blocked") {
-            return true;
+            return false;
           }
-          return false;
+          return true;
         }}
       />
       {blocker.state === "blocked" && (
         <Modal
           content={ts.unsavedChanges}
           onClose={blocker.reset}
+          onlyCloseButton={false}
         />
       )}
     </div>

@@ -20,7 +20,7 @@ const Menu: React.FC<{
   onClickButton?: () => void;
 }> = (props) => {
   return (
-    <div className={`menu--${props.contentVisible ? "on" : "off"}`}>
+    <div className={`menu--${props.contentVisible !== false ? "on" : "off"}`}>
       {props.title && (
         <div className="menu__title">
           <h3>{props.title}</h3>

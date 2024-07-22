@@ -15,5 +15,6 @@
   "terminal.integrated.mouseWheelZoom": false,
   "window.zoomPerWindow": true,
   "window.zoomLevel": 0,
-  "prettier.singleAttributePerLine": true
+  "prettier.singleAttributePerLine": true,
+  "jest.runMode": "on-demand"
 }

@@ -18,13 +18,15 @@ const Form: React.FC<{
 
   return (
     <form
+      className="form"
       onSubmit={(e) => {
         e.preventDefault();
         const data = new FormData(e.target as HTMLFormElement);
-        if (!data) {
-          throw Error("no data");
+        if (data.entries().next().done) {
+          console.log("no data");
+        } else {
+          props.onSubmitData(data);
         }
-        props.onSubmitData(data);
       }}>
       {props.content}
       <div className="form__button__container">
