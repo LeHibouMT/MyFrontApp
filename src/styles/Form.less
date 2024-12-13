@@ -8,11 +8,12 @@
     border-top: var(--classic-border) var(--fourth-color-background);
     display: flex;
     justify-content: center;
+    gap: 5rem;
 
     button {
       background-color: var(--third-color-background);
       border-radius: calc(var(--border-radius-size) / 2);
-      border: var(--classic-border) var(--fourth-color-background);
+      border: var(--thin-border);
       padding: var(--button-padding);
       transition:
         opacity 0.3s ease,
@@ -23,6 +24,7 @@
 
       &:not(:disabled) {
         color: var(--classic-color-writing);
+        border-color: var(--classic-color-writing);
 
         &:hover {
           cursor: pointer;
@@ -31,10 +33,6 @@
           border-color: var(--shining-color-writing);
           color: var(--shining-color-writing);
         }
-      }
-
-      &:first-child {
-        margin-right: 5rem;
       }
     }
 

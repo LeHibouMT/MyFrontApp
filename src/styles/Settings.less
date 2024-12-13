@@ -7,10 +7,15 @@
         color: var(--classic-color-writing);
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
 
-        .form__button__container {
-          border-radius: 0 0 var(--border-radius-size) var(--border-radius-size);
+        .radio__buttons__list {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          > * {
+            padding: 1rem 5rem 1rem 2rem;
+          }
         }
       }
     }

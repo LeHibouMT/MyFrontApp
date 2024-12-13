@@ -24,15 +24,13 @@ import Modal from "./subcomponents/Modal";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
 import TabsMenu, { TabInterfaceLink } from "./subcomponents/TabsMenu";
 
-type SettingsValue = {
+type SettingsValues = {
   [ThemeKey]: PossibleThemes;
   [LanguageKey]: PossibleLanguages;
 };
 
-type SettingsKeys = keyof SettingsValue;
-
 type Tabs = {
-  [S in SettingsKeys]: TabInterfaceLink<S>;
+  [S in keyof SettingsValues]: TabInterfaceLink<S>;
 };
 
 /**
@@ -44,7 +42,11 @@ const Settings: React.FC = () => {
   const ts = useTranslation();
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
-  const [settingsValue, setSettingsValue] = useState<SettingsValue>({
+  const [defaultValues, setDefaultValues] = useState<SettingsValues>({
+    [ThemeKey]: themeContext.value,
+    [LanguageKey]: languageContext.value
+  });
+  const [settingsValues, setSettingsValues] = useState<SettingsValues>({
     [ThemeKey]: themeContext.value,
     [LanguageKey]: languageContext.value
   });
@@ -77,11 +79,12 @@ const Settings: React.FC = () => {
               value: theme
             }))}
             name={key}
-            checked={settingsValue[key]}
+            checked={settingsValues[key]}
             onChange={(value) => {
               if (isValidTheme(value)) {
-                setSettingsValue({ ...settingsValue, [key]: value });
-                if (value === themeContext.value) {
+                setSettingsValues({ ...settingsValues, [key]: value });
+                themeContext.setValue(value);
+                if (value === defaultValues[key]) {
                   setHaveUnsavedChanges(false);
                 } else {
                   setHaveUnsavedChanges(true);
@@ -93,13 +96,14 @@ const Settings: React.FC = () => {
         onSubmitData={(formData: FormData) => {
           const data = formData.get(key);
           if (data && isValidTheme(data)) {
-            data && themeContext.setValue(data);
             setThemeCookie(data);
             setHaveUnsavedChanges(false);
+            setDefaultValues(settingsValues);
           }
         }}
         handleReset={() => {
-          setSettingsValue({ ...settingsValue, [key]: themeContext.value });
+          setSettingsValues(defaultValues);
+          themeContext.setValue(defaultValues[ThemeKey]);
           setHaveUnsavedChanges(false);
         }}
         disabled={!haveUnsavedChanges}
@@ -117,11 +121,12 @@ const Settings: React.FC = () => {
               value: language
             }))}
             name={key}
-            checked={settingsValue[key]}
+            checked={settingsValues[key]}
             onChange={(value) => {
               if (isValidLanguage(value)) {
-                setSettingsValue({ ...settingsValue, [key]: value });
-                if (value === languageContext.value) {
+                setSettingsValues({ ...settingsValues, [key]: value });
+                languageContext.setValue(value);
+                if (value === defaultValues[key]) {
                   setHaveUnsavedChanges(false);
                 } else {
                   setHaveUnsavedChanges(true);
@@ -133,13 +138,14 @@ const Settings: React.FC = () => {
         onSubmitData={(formData: FormData) => {
           const data = formData.get(key);
           if (data && isValidLanguage(data)) {
-            data && languageContext.setValue(data);
             setLanguageCookie(data);
             setHaveUnsavedChanges(false);
+            setDefaultValues(settingsValues);
           }
         }}
         handleReset={() => {
-          setSettingsValue({ ...settingsValue, [key]: languageContext.value });
+          setSettingsValues(defaultValues);
+          languageContext.setValue(defaultValues[LanguageKey]);
           setHaveUnsavedChanges(false);
         }}
         disabled={!haveUnsavedChanges}
