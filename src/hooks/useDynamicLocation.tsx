@@ -8,8 +8,8 @@ function useDynamicLocation() {
   const fullLocation = useLocation().pathname;
 
   return {
-    mainLocation: fullLocation.split("/").length > 1 ? fullLocation.split("/")[1] : fullLocation.split("/")[0],
-    fullLocation: fullLocation.substring(1)
+    mainLocation: `/${fullLocation.split("/").length > 1 ? fullLocation.split("/")[1] : fullLocation.split("/")[0]}`,
+    fullLocation: fullLocation
   };
 }
 

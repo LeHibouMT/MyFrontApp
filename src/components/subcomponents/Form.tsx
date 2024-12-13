@@ -29,7 +29,9 @@ const Form: React.FC<{
         }
       }}>
       {props.content}
-      <div className="form__button__container">
+      <div
+        className="form__button__container"
+        data-active={!props.disabled}>
         <button
           type="submit"
           disabled={props.disabled}>
