@@ -2,10 +2,10 @@
  * Enum of possible paths.
  */
 export enum PossiblePathsEnum {
-  about = "About",
-  default = "",
+  about = "/About",
+  default = "/",
   error = "*",
-  languageSettings = "Settings/Language",
-  settings = "Settings",
-  themeSettings = "Settings/Theme"
+  settings = "/Settings",
+  languageSettings = `${settings}/Language`,
+  themeSettings = `${settings}/Theme`
 }

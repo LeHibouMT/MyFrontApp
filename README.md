@@ -58,7 +58,7 @@ npm update --save
 7. <p align="justify">To run the project locally:</p>
 
 ```
-npm start
+npm run dev
 ```
 
 ## Project:

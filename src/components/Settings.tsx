@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useBlocker, useNavigate, useParams } from "react-router-dom";
 import useTranslation from "hooks/useTranslation";
+import { PossiblePathsEnum } from "utils/constants.utils";
 import { areSameString } from "utils/functions.utils";
 import {
   PossibleLanguagesEnum,
@@ -21,7 +22,7 @@ import {
 import Form from "./subcomponents/Form";
 import Modal from "./subcomponents/Modal";
 import RadioButtonsList from "./subcomponents/RadioButtonsList";
-import TabsMenu, { TabInterface } from "./subcomponents/TabsMenu";
+import TabsMenu, { TabInterfaceLink } from "./subcomponents/TabsMenu";
 
 type SettingsValue = {
   [ThemeKey]: PossibleThemes;
@@ -31,7 +32,7 @@ type SettingsValue = {
 type SettingsKeys = keyof SettingsValue;
 
 type Tabs = {
-  [S in SettingsKeys]: TabInterface<S>;
+  [S in SettingsKeys]: TabInterfaceLink<S>;
 };
 
 /**
@@ -53,8 +54,18 @@ const Settings: React.FC = () => {
     ({ currentLocation, nextLocation }) => haveUnsavedChanges && currentLocation.pathname !== nextLocation.pathname
   );
   const tabs: Tabs = {
-    [ThemeKey]: { id: ThemeKey, title: ts.themeSettingsTitle, content: getThemeSettingsContent() },
-    [LanguageKey]: { id: LanguageKey, title: ts.languageSettingsTitle, content: getLanguageSettingsContent() }
+    [ThemeKey]: {
+      id: ThemeKey,
+      title: ts.themeSettingsTitle,
+      content: getThemeSettingsContent(),
+      path: PossiblePathsEnum.themeSettings
+    },
+    [LanguageKey]: {
+      id: LanguageKey,
+      title: ts.languageSettingsTitle,
+      content: getLanguageSettingsContent(),
+      path: PossiblePathsEnum.languageSettings
+    }
   };
   function getThemeSettingsContent() {
     const key = ThemeKey;
@@ -143,9 +154,9 @@ const Settings: React.FC = () => {
       <TabsMenu
         tabs={Object.values(tabs)}
         initialTab={Object.keys(tabs).findIndex((key) => areSameString(key, setting))}
-        onTabChange={(tab: TabInterface) => {
-          navigate(`../${tab.id}`, { relative: "path" });
-          if (blocker.state === "blocked") {
+        onTabChange={(tab: TabInterfaceLink) => {
+          navigate(tab.path);
+          if (haveUnsavedChanges) {
             return false;
           }
           return true;

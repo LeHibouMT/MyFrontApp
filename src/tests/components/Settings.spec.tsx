@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import rrd, { BlockerFunction } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Settings from "components/Settings";
+import { PossiblePathsEnum } from "utils/constants.utils";
 import { LanguageKey, PossibleLanguagesEnum } from "utils/language.utils";
 import { PossibleThemesEnum, ThemeKey } from "utils/theme.utils";
 
@@ -48,11 +49,11 @@ describe("Settings", () => {
 
     fireEvent.click(screen.getByText("Language"));
 
-    expect(navigate).toHaveBeenCalledWith(`../${LanguageKey}`, { relative: "path" });
+    expect(navigate).toHaveBeenCalledWith(PossiblePathsEnum.languageSettings);
 
     fireEvent.click(screen.getByText("Theme"));
 
-    expect(navigate).toHaveBeenCalledWith(`../${ThemeKey}`, { relative: "path" });
+    expect(navigate).toHaveBeenCalledWith(PossiblePathsEnum.themeSettings);
   });
 
   it("renders the modal when trying to switch tab with unsaved changes", async () => {
@@ -91,7 +92,7 @@ describe("Settings", () => {
 
     fireEvent.click(screen.getByText("Language"));
 
-    expect(navigate).toHaveBeenCalledWith(`../${LanguageKey}`, { relative: "path" });
+    expect(navigate).toHaveBeenCalledWith(PossiblePathsEnum.languageSettings);
     expect(screen.getByText("Dark")).toBeInTheDocument();
     expect(screen.getByText("You have unsaved changes, please confirm or cancel changes.")).toBeInTheDocument();
   });
