@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface TabInterface<K extends string | number = string> {
   id: K;
@@ -24,6 +25,7 @@ interface TabProps<TabType extends TabInterface | TabInterfaceLink> {
  * @returns The component.
  */
 function TabsMenu<T extends TabInterface | TabInterfaceLink>(props: TabProps<T>): JSX.Element {
+  const navigate = useNavigate();
   const [tabNumber, setTabNumber] = useState<number>(props.initialTab && props.initialTab > 0 ? props.initialTab : 0);
 
   useEffect(() => {
@@ -39,7 +41,11 @@ function TabsMenu<T extends TabInterface | TabInterfaceLink>(props: TabProps<T>)
             className={`tab--${tabNumber === index ? "active" : "inactive"}`}
             onClick={() => {
               if (!props.onTabChange || props.onTabChange?.(tab)) {
-                setTabNumber(index);
+                if ("path" in tab) {
+                  navigate(tab.path);
+                } else {
+                  setTabNumber(index);
+                }
               }
             }}
             key={index}>

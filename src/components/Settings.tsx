@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useBlocker, useNavigate, useParams } from "react-router-dom";
+import { useBlocker, useParams } from "react-router-dom";
 import useTranslation from "hooks/useTranslation";
 import { PossiblePathsEnum } from "utils/constants.utils";
 import { areSameString } from "utils/functions.utils";
@@ -41,7 +41,6 @@ type Tabs = {
  */
 const Settings: React.FC = () => {
   const { setting } = useParams();
-  const navigate = useNavigate();
   const ts = useTranslation();
   const themeContext = useContext(ThemeContext);
   const languageContext = useContext(LanguageContext);
@@ -154,13 +153,6 @@ const Settings: React.FC = () => {
       <TabsMenu
         tabs={Object.values(tabs)}
         initialTab={Object.keys(tabs).findIndex((key) => areSameString(key, setting))}
-        onTabChange={(tab: TabInterfaceLink) => {
-          navigate(tab.path);
-          if (haveUnsavedChanges) {
-            return false;
-          }
-          return true;
-        }}
       />
       {blocker.state === "blocked" && (
         <Modal

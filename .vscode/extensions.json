@@ -10,7 +10,8 @@
     "vscode-icons-team.vscode-icons",
     "orta.vscode-jest",
     "firsttris.vscode-jest-runner",
-    "github.copilot"
+    "github.copilot",
+    "github.copilot-chat"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": []

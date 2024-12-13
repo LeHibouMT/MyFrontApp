@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import { MemoryRouter } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import TabsMenu, { TabInterface, TabInterfaceLink } from "components/subcomponents/TabsMenu";
 
@@ -10,45 +11,59 @@ describe("TabsMenu Component", () => {
   ];
 
   it("renders without crashing", () => {
-    const { getByText } = render(<TabsMenu tabs={tabs} />);
-    expect(getByText("Tab 1")).toBeInTheDocument();
+    render(
+      <MemoryRouter>
+        <TabsMenu tabs={tabs} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText("Tab 1")).toBeInTheDocument();
   });
 
   it("renders initial tab if provided", () => {
     render(
-      <TabsMenu
-        tabs={tabs}
-        initialTab={1}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          initialTab={1}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByText("Content 2")).toBeInTheDocument();
   });
 
-  it("changes tab when a different tab is clicked", async () => {
-    render(<TabsMenu tabs={tabs} />);
+  it("changes tab when a different tab is clicked", () => {
+    render(
+      <MemoryRouter>
+        <TabsMenu tabs={tabs} />
+      </MemoryRouter>
+    );
     fireEvent.click(screen.getByText("Tab 2"));
     expect(screen.getByText("Content 2")).toBeInTheDocument();
   });
 
-  it("calls onTabChange prop when a tab is clicked", async () => {
+  it("calls onTabChange prop when a tab is clicked", () => {
     const onTabChangeMock = jest.fn();
     render(
-      <TabsMenu
-        tabs={tabs}
-        onTabChange={onTabChangeMock}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          onTabChange={onTabChangeMock}
+        />
+      </MemoryRouter>
     );
     fireEvent.click(screen.getByText("Tab 3"));
-    () => expect(onTabChangeMock).toHaveBeenCalledWith(tabs[2]);
+    expect(onTabChangeMock).toHaveBeenCalledWith(tabs[2]);
   });
 
-  it("does not change tab if onTabChange returns false", async () => {
+  it("does not change tab if onTabChange returns false", () => {
     const onTabChangeMock = jest.fn().mockReturnValue(false);
     render(
-      <TabsMenu
-        tabs={tabs}
-        onTabChange={onTabChangeMock}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          onTabChange={onTabChangeMock}
+        />
+      </MemoryRouter>
     );
     fireEvent.click(screen.getByText("Tab 3"));
     expect(screen.queryByText("Content 3")).not.toBeInTheDocument();
@@ -56,18 +71,22 @@ describe("TabsMenu Component", () => {
 
   it("updates when initialTab prop changes", () => {
     const { rerender } = render(
-      <TabsMenu
-        tabs={tabs}
-        initialTab={1}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          initialTab={1}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByText("Content 2")).toBeInTheDocument();
 
     rerender(
-      <TabsMenu
-        tabs={tabs}
-        initialTab={2}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          initialTab={2}
+        />
+      </MemoryRouter>
     );
     expect(screen.getByText("Content 3")).toBeInTheDocument();
   });
@@ -79,18 +98,25 @@ describe("TabsMenu Component", () => {
       { id: "3", title: "Tab 3", content: <div>Content 3</div>, path: "/tab3" }
     ];
 
-    render(<TabsMenu tabs={tabsWithLinks} />);
+    render(
+      <MemoryRouter>
+        <TabsMenu tabs={tabsWithLinks} />
+      </MemoryRouter>
+    );
     expect(screen.getByText("Tab 1")).toBeInTheDocument();
     expect(screen.getByText("Tab 2")).toBeInTheDocument();
     expect(screen.getByText("Tab 3")).toBeInTheDocument();
   });
+
   it("calls onTabChange with correct tab when a tab is clicked", () => {
     const onTabChangeMock = jest.fn();
     render(
-      <TabsMenu
-        tabs={tabs}
-        onTabChange={onTabChangeMock}
-      />
+      <MemoryRouter>
+        <TabsMenu
+          tabs={tabs}
+          onTabChange={onTabChangeMock}
+        />
+      </MemoryRouter>
     );
     fireEvent.click(screen.getByText("Tab 2"));
     expect(onTabChangeMock).toHaveBeenCalledWith(tabs[1]);
