@@ -49,7 +49,7 @@ function TabsMenu<T extends TabInterface | TabInterfaceLink>(props: TabProps<T>)
               }
             }}
             key={index}>
-            {tab.title}
+            <span className="tab__title">{tab.title}</span>
           </div>
         ))}
       </div>

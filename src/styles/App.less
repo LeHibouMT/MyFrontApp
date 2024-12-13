@@ -13,6 +13,7 @@
   --blur: blur(20px);
   --classic-border: 2px solid;
   --thin-border: 1px solid;
+  --button-padding: 0.3rem 1rem 0.5rem 1rem;
   font-size: 62.5%;
 }
 
@@ -42,6 +43,29 @@
   --third-color-background: #282828;
   --fourth-color-background: #404040;
   --border-color-navbar: #8854d0;
+}
+
+@keyframes border-color-flow {
+  0% {
+    border-color: var(--shining-color-writing) var(--fourth-color-background) var(--fourth-color-background)
+      var(--fourth-color-background);
+  }
+  25% {
+    border-color: var(--shining-color-writing) var(--shining-color-writing) var(--fourth-color-background)
+      var(--fourth-color-background);
+  }
+  50% {
+    border-color: var(--fourth-color-background) var(--shining-color-writing) var(--shining-color-writing)
+      var(--fourth-color-background); /* Right and bottom borders */
+  }
+  75% {
+    border-color: var(--fourth-color-background) var(--fourth-color-background) var(--shining-color-writing)
+      var(--shining-color-writing); /* Bottom and left borders */
+  }
+  100% {
+    border-color: var(--shining-color-writing) var(--fourth-color-background) var(--fourth-color-background)
+      var(--shining-color-writing); /* Back to the start */
+  }
 }
 
 #app {

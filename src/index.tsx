@@ -10,11 +10,27 @@ const router = createBrowserRouter(
       path="*"
       element={<App />}
     />
-  )
+  ),
+  // future flags for react-router-dom
+  {
+    future: {
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true
+    }
+  }
 );
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider
+      router={router}
+      // future flags for react-router-dom
+      future={{
+        v7_startTransition: true
+      }}
+    />
   </React.StrictMode>
 );

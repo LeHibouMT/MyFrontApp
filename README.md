@@ -1,6 +1,6 @@
 # MyApp
 
-<p align="justify">Web application in React 18+ using React Router, with TypeScript, Less and Webpack by Michel Taing.</p>
+<p align="justify">Web application in React 19 using React Router, with TypeScript, Less and Webpack by Michel Taing.</p>
 
 ## Table of Contents
 

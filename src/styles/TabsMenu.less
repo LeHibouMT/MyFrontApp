@@ -2,6 +2,7 @@
   border: var(--classic-border) var(--fourth-color-background);
   border-radius: var(--border-radius-size);
   background-color: var(--third-color-background);
+  overflow: hidden;
 
   .tabs__menu__header {
     display: inline-flex;
@@ -14,6 +15,52 @@
       padding: calc(var(--classic-font-size) / 2);
       color: var(--classic-color-writing);
       cursor: pointer;
+      transition:
+        opacity 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+
+      .tab__title {
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: var(--shining-color-writing);
+          transform: scaleX(0);
+          transform-origin: bottom right;
+          transition: transform 0.5s ease-in 0.1s;
+        }
+      }
+    }
+
+    > :hover {
+      box-shadow: 0 0 5px var(--fourth-color-background);
+
+      .tab__title {
+        color: var(--shining-color-writing);
+
+        &::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+        }
+      }
+    }
+
+    .tab--active {
+      .tab__title {
+        color: var(--shining-color-writing);
+      }
+      background-color: var(--fourth-color-background);
+    }
+
+    &:has(:hover) > :not(:hover) {
+      opacity: 0.3;
     }
 
     > :not(:last-child) {

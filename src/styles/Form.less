@@ -5,5 +5,41 @@
 
   .form__button__container {
     padding: 1rem;
+    border-top: var(--classic-border) var(--fourth-color-background);
+    display: flex;
+    justify-content: center;
+
+    button {
+      background-color: var(--third-color-background);
+      border-radius: calc(var(--border-radius-size) / 2);
+      border: var(--classic-border) var(--fourth-color-background);
+      padding: var(--button-padding);
+      transition:
+        opacity 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+
+      &:not(:disabled) {
+        color: var(--classic-color-writing);
+
+        &:hover {
+          cursor: pointer;
+          box-shadow: 0 0 5px var(--fourth-color-background);
+          background-color: var(--fourth-color-background);
+          border-color: var(--shining-color-writing);
+          color: var(--shining-color-writing);
+        }
+      }
+
+      &:first-child {
+        margin-right: 5rem;
+      }
+    }
+
+    &[data-active="true"]:has(:hover) > :not(:hover) {
+      opacity: 0.3;
+    }
   }
 }

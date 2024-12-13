@@ -4,24 +4,13 @@
 
     .tabs__menu__content {
       form {
-        border-bottom: var(--classic-border) var(--fourth-color-background);
         color: var(--classic-color-writing);
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
 
         .form__button__container {
-          padding: 1rem;
-          border-radius: var(--border-radius-size);
-
-          &[data-active="false"] {
-            background-color: var(--third-color-background);
-          }
-
-          &[data-active="true"] {
-            background-color: var(--fourth-color-background);
-            border: var(--thin-border) var(--shining-color-writing);
-          }
+          border-radius: 0 0 var(--border-radius-size) var(--border-radius-size);
         }
       }
     }

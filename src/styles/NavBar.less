@@ -9,8 +9,7 @@
         align-content: center;
         transition: opacity 0.3s;
 
-        .link--active,
-        .link--inactive {
+        > * {
           position: relative;
 
           &::after {
@@ -43,16 +42,13 @@
         &:hover {
           cursor: pointer;
 
-          .link--active,
-          .link--inactive {
-            &::after {
-              transform: scaleX(1);
-              transform-origin: bottom left;
-            }
+          > ::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
           }
 
           .link--inactive {
-            transition: color 0.3s;
+            transition: color 0.3s ease;
             color: var(--shining-color-writing);
           }
         }
