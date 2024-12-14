@@ -24,7 +24,7 @@ interface TabProps<TabType extends TabInterface | TabInterfaceLink> {
  * @param onTabChange Optional function called after trying to change tab, return a boolean, true if the tab should change.
  * @returns The component.
  */
-function TabsMenu<T extends TabInterface | TabInterfaceLink>(props: TabProps<T>): JSX.Element {
+function TabsMenu<T extends TabInterface | TabInterfaceLink>(props: TabProps<T>): React.JSX.Element {
   const navigate = useNavigate();
   const [tabNumber, setTabNumber] = useState<number>(props.initialTab && props.initialTab > 0 ? props.initialTab : 0);
 

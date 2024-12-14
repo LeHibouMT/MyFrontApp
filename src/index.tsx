@@ -25,12 +25,6 @@ const router = createBrowserRouter(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider
-      router={router}
-      // future flags for react-router-dom
-      future={{
-        v7_startTransition: true
-      }}
-    />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

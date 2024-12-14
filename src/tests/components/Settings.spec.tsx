@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import rrd, { BlockerFunction } from "react-router-dom";
+import { BlockerFunction } from "react-router-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Settings from "components/Settings";
 import { PossiblePathsEnum } from "utils/constants.utils";
@@ -12,26 +12,35 @@ jest.mock("react-router-dom", () => ({
 
 describe("Settings", () => {
   it("renders without errors", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
     expect(screen.getByText("Settings")).toBeInTheDocument();
     expect(screen.getByText("Dark")).toBeInTheDocument();
   });
 
   it("renders without errors with setting from the url params", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: LanguageKey });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: LanguageKey }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
     expect(screen.getByText("English")).toBeInTheDocument();
   });
 
   it("changes theme when a new theme is selected", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: ThemeKey });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: ThemeKey }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Dark"));
@@ -41,10 +50,13 @@ describe("Settings", () => {
   });
 
   it("redirects to another page when switching tab", () => {
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
     const navigate = jest.fn();
-    rrd.useNavigate = jest.fn().mockImplementation(() => navigate);
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn().mockImplementation(() => navigate),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Language"));
@@ -57,32 +69,35 @@ describe("Settings", () => {
   });
 
   it("renders the modal when trying to switch tab with unsaved changes", async () => {
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
     const navigate = jest.fn();
-    rrd.useNavigate = jest.fn().mockImplementation(() => navigate);
-    rrd.useBlocker = jest.fn().mockImplementation((blocker: BlockerFunction) => {
-      blocker({
-        currentLocation: {
-          pathname: "/settings",
-          state: undefined,
-          key: "",
-          search: "",
-          hash: ""
-        },
-        nextLocation: {
-          pathname: "/settings/language",
-          state: undefined,
-          key: "",
-          search: "",
-          hash: ""
-        },
-        // @ts-expect-error because the enums can't be imported from the module.
-        historyAction: "PUSH"
-      });
-      return {
-        state: "blocked"
-      };
-    });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn().mockImplementation(() => navigate),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue((blocker: BlockerFunction) => {
+        blocker({
+          currentLocation: {
+            pathname: "/settings",
+            state: undefined,
+            key: "",
+            search: "",
+            hash: ""
+          },
+          nextLocation: {
+            pathname: "/settings/language",
+            state: undefined,
+            key: "",
+            search: "",
+            hash: ""
+          },
+          // @ts-expect-error because the enums can't be imported from the module.
+          historyAction: "PUSH"
+        });
+        return {
+          state: "blocked"
+        };
+      })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Dark"));
@@ -98,9 +113,12 @@ describe("Settings", () => {
   });
 
   it("buttons disabled for theme settings", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
     expect(screen.getByText("Confirm")).toBeDisabled();
     expect(screen.getByText("Cancel")).toBeDisabled();
@@ -117,9 +135,12 @@ describe("Settings", () => {
   });
 
   it("buttons disabled for language settings", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: LanguageKey });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: LanguageKey }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
     expect(screen.getByText("Confirm")).toBeDisabled();
     expect(screen.getByText("Cancel")).toBeDisabled();
@@ -136,9 +157,12 @@ describe("Settings", () => {
   });
 
   it("confirm button on click for theme setting", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Dark"));
@@ -155,9 +179,12 @@ describe("Settings", () => {
   });
 
   it("cancel button on click for theme setting", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: undefined });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: undefined }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Dark"));
@@ -174,9 +201,12 @@ describe("Settings", () => {
   });
 
   it("confirm button on click for language setting", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: LanguageKey });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: LanguageKey }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Français"));
@@ -193,9 +223,12 @@ describe("Settings", () => {
   });
 
   it("cancel button on click for language setting", () => {
-    rrd.useNavigate = jest.fn();
-    rrd.useParams = jest.fn().mockReturnValue({ setting: LanguageKey });
-    rrd.useBlocker = jest.fn().mockReturnValue({ state: "unblocked" });
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: jest.fn(),
+      useParams: jest.fn().mockReturnValue({ setting: LanguageKey }),
+      useBlocker: jest.fn().mockReturnValue({ state: "unblocked" })
+    }));
     render(<Settings />);
 
     fireEvent.click(screen.getByText("Français"));
