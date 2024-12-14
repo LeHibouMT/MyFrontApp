@@ -4,6 +4,7 @@
   --aurora-green: #78e08f;
   --reef-encounter: #079992;
   --dark-saphire: #0c2461;
+  --small-font-size: 1.2rem;
   --classic-font-size: 1.8rem;
   --big-font-size: 2rem;
   --large-font-size: 2.7rem;
@@ -77,7 +78,7 @@
 
   .content {
     min-height: 100vh;
-    padding: 6rem 7.5%;
+    padding: 3rem 7.5% 6rem 7.5%;
   }
 
   @media (min-width: 1025px) {
@@ -91,8 +92,13 @@
 
   @media (min-width: 768px) {
     .content {
-      margin-top: var(--extra-font-size);
       border-radius: var(--border-radius-size);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .content {
+      padding-top: 6rem;
     }
   }
 }
