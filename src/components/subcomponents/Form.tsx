@@ -23,7 +23,7 @@ const Form: React.FC<{
         e.preventDefault();
         const data = new FormData(e.target as HTMLFormElement);
         if (data.entries().next().done) {
-          console.log("no data");
+          // console.log("no data");
         } else {
           props.onSubmitData(data);
         }

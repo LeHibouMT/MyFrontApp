@@ -12,5 +12,6 @@ module.exports = {
   },
   collectCoverage: true,
   coverageDirectory: "coverage",
-  testPathIgnorePatterns: ["/node_modules/", "/dist/"]
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  setupFilesAfterEnv: ["<rootDir>/src/tests/setupTests.tsx"]
 };
