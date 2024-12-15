@@ -1,2 +1,34 @@
 .about {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: var(--third-color-background);
+  border-radius: calc(var(--border-radius-size) * 2);
+  padding: 4rem 5% 4rem 5%;
+
+  .about__title {
+    grid-area: title;
+  }
+
+  .about__selfie {
+    grid-area: selfie;
+    width: 100%;
+    max-width: 100px;
+  }
+
+  .biography {
+    grid-area: biography;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 10% auto;
+    grid-template-areas: "title title" "selfie biography";
+    gap: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: auto 55%;
+    grid-template-areas: "selfie title" "biography biography";
+    gap: 2rem 1rem;
+  }
 }

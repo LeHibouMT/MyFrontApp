@@ -14,7 +14,6 @@
       flex: 1;
       padding: calc(var(--classic-font-size) / 2);
       color: var(--classic-color-writing);
-      cursor: pointer;
       transition:
         opacity 0.3s ease,
         color 0.3s ease,
@@ -22,6 +21,7 @@
         background-color 0.3s ease;
 
       .tab__title {
+        display: inline-block;
         position: relative;
 
         &::after {
@@ -39,7 +39,14 @@
       }
     }
 
-    > :hover {
+    .tab--active {
+      .tab__title {
+        cursor: default;
+      }
+    }
+
+    .tab--inactive:hover {
+      cursor: pointer;
       box-shadow: 0 0 5px var(--fourth-color-background);
 
       .tab__title {
@@ -52,15 +59,18 @@
       }
     }
 
-    .tab--active {
-      .tab__title {
-        color: var(--shining-color-writing);
-      }
-      background-color: var(--fourth-color-background);
+    &:has(.tab--inactive:hover) > :not(:hover) {
+      opacity: 0.3;
     }
 
-    &:has(:hover) > :not(:hover) {
-      opacity: 0.3;
+    &:not(:has(:hover)) .tab--active,
+    &:has(:hover) > :hover {
+      background-color: var(--fourth-color-background);
+
+      .tab__title {
+        color: var(--shining-color-writing);
+        font-weight: normal;
+      }
     }
 
     > :not(:last-child) {

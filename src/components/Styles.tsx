@@ -10,6 +10,7 @@ import "../styles/BackButton.less";
 import "../styles/Error.less";
 import "../styles/Footer.less";
 import "../styles/Form.less";
+import "../styles/Global.less";
 import "../styles/Header.less";
 import "../styles/Home.less";
 import "../styles/NavBar.less";

@@ -164,7 +164,6 @@ const Settings: React.FC = () => {
         <Modal
           content={ts.unsavedChanges}
           onClose={blocker.reset}
-          onlyCloseButton={false}
         />
       )}
     </div>

@@ -25,6 +25,9 @@ type PossibleWordKeys =
   | `${PossibleThemesEnum}`
   | `${PossibleLanguagesEnum}`
   | "aboutTitle"
+  | "biographyText1"
+  | "biographyText2"
+  | "biographyTitle"
   | "cancelButtonLabel"
   | "errorTitle"
   | "footerCookiesText"

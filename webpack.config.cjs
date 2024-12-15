@@ -37,15 +37,20 @@ module.exports = {
         use: ["style-loader", "css-loader", "less-loader"]
       },
       {
-        test: /\.(jpg|png|svg|gif|webp)$/,
+        test: /\.(jpg|jpeg|png|svg|gif|webp|woff|woff2|eot|ttf|otf)$/,
         type: "asset/resource"
       }
     ]
   },
   devServer: {
-    static: {
-      directory: path.join(__dirname, "output")
-    },
+    static: [
+      {
+        directory: path.join(__dirname, "output")
+      },
+      {
+        directory: path.join(__dirname, "public")
+      }
+    ],
     port: 3000,
     historyApiFallback: true
   },

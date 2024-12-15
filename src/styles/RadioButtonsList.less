@@ -4,14 +4,18 @@
   flex-direction: column;
   gap: 1rem;
 
-  &:has(:hover) > :not(:hover),
-  &:not(:has(:hover)) > :not(:has(:checked)) {
+  &:has(.radio__option--unchecked:hover) > :not(:hover) {
     opacity: 0.3;
   }
 
-  &:has(:hover) > :hover,
-  &:not(:has(:hover)) > :has(:checked) {
-    border-color: var(--shining-color-writing);
+  &:not(:has(:hover)) > :has(:checked),
+  &:has(:hover) > :hover {
+    background-color: var(--fourth-color-background);
+    color: var(--shining-color-writing);
+
+    label {
+      font-weight: normal;
+    }
   }
 
   > * {
@@ -30,14 +34,6 @@
 
     input {
       margin: 0 1rem;
-    }
-
-    label {
-    }
-
-    &:hover,
-    &:has(:checked) {
-      color: var(--shining-color-writing);
     }
   }
 }

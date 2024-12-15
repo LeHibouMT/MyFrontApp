@@ -1,8 +1,8 @@
 {
   "name": "myapp",
   "homepage": ".",
-  "version": "1.0.0",
-  "description": "First web application in React by Michel Taing.",
+  "version": "1.0.1",
+  "description": "Web application in React by Michel Taing.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.config.cjs",
@@ -22,6 +22,7 @@
     "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
+    "dompurify": "^3.2.3",
     "env-cmd": "^10.1.0",
     "js-cookie": "^3.0.5",
     "less": "^4.2.1",
@@ -56,9 +57,9 @@
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
+    "util": "^0.12.5",
     "webpack": "^5.97.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.2.0",
-    "util": "^0.12.5"
+    "webpack-dev-server": "^5.2.0"
   }
 }

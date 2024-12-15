@@ -44,7 +44,7 @@ const RadioButtonsList: React.FC<{
           const boxId = `${props.name}--option--${index}`;
           return (
             <div
-              className="radio__buttons__option"
+              className={`radio__option--${!isNullish(valueChecked) && valueChecked === box.value ? "checked" : "unchecked"}`}
               key={index}
               onClick={() => handleSelectedBoxChange(box.value)}>
               <input

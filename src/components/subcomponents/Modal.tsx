@@ -12,9 +12,10 @@ const Modal: React.FC<{
   onlyCloseButton?: boolean;
 }> = (props) => {
   return (
-    <div
+    <dialog
       className="modal"
-      onClick={!props.onlyCloseButton ? props.onClose : undefined}>
+      onClick={props.onlyCloseButton === false ? props.onClose : undefined}
+      open={true}>
       <div
         className="modal__card"
         onClick={(e) => e.stopPropagation()}>
@@ -26,7 +27,7 @@ const Modal: React.FC<{
         {props.title && <h1 className="modal__title">{props.title}</h1>}
         <div className="modal__content">{props.content}</div>
       </div>
-    </div>
+    </dialog>
   );
 };
 

@@ -38,8 +38,9 @@ const App: React.FC = () => {
           id="app"
           className={`app__theme--${theme}`}>
           <Header />
-          <div className="banner--left"></div>
-          <main className="content">
+          <main
+            className="content"
+            aria-label="Main content">
             <Routes>
               <Route
                 path={PossiblePathsEnum.default}
@@ -59,7 +60,6 @@ const App: React.FC = () => {
               />
             </Routes>
           </main>
-          <div className="banner--right"></div>
           <Footer />
         </div>
       </LanguageContext.Provider>

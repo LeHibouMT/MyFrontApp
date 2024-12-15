@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="home">
-      <h2>{ts.welcome}</h2>
+      <h2 className="home__title">{ts.welcome}</h2>
     </div>
   );
 };
