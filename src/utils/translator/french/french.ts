@@ -10,8 +10,7 @@ const French: Translation = {
   [PossibleLanguagesEnum.english]: "English",
   [PossibleLanguagesEnum.french]: "Français",
   aboutTitle: "À Propos de moi",
-  biographyText1:
-    "Bonjour! Je m'appelle <b>Michel TAING</b>, et je suis ingénieur logiciel. Je suis diplômé en informatique de l'ESIEE Paris, où j'ai étudié pendant trois ans.",
+  biographyText1: "Hey! Je suis <b>Michel TAING</b>. Je suis ingénieur logiciel basé à Paris, en France.",
   biographyText2:
     "Avant cela, j'ai suivi un cursus en sciences générales. Je me spécialise en <b>TypeScript</b> (et JavaScript aussi) et en <b>Python</b>. Ce site web a d'ailleurs été réalisé avec React et TypeScript. Je maîtrise également le C#.",
   biographyTitle: "Votre Ingénieur Logiciel",

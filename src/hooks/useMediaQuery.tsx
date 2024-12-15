@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
  * @param query The query.
  * @returns The boolean result from the query.
  */
-function useMediaQuery(query: string) {
+function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState<boolean>(window.matchMedia(query).matches);
 
   useEffect(() => {
@@ -13,6 +13,7 @@ function useMediaQuery(query: string) {
     function handleChange(e: { matches: boolean | ((prevState: boolean) => boolean) }) {
       setMatches(e.matches);
     }
+
     matchQueryList.addEventListener("change", handleChange);
 
     return () => {

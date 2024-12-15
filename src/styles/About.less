@@ -1,34 +1,24 @@
 .about {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  background-color: var(--third-color-background);
-  border-radius: calc(var(--border-radius-size) * 2);
-  padding: 4rem 5% 4rem 5%;
+  .first__about__section {
+    box-sizing: border-box;
+    background-color: var(--second-color-background);
+    padding: 4rem 5% 4rem 5%;
+    background-image: url("/public/media/png/selfieAXA.jpg");
+    background-position: right;
+    background-repeat: no-repeat;
+    transition:
+      background-size 0.3s ease,
+      height 0.3s ease;
+    position: sticky;
+    top: 0;
 
-  .about__title {
-    grid-area: title;
-  }
-
-  .about__selfie {
-    grid-area: selfie;
-    width: 100%;
-    max-width: 100px;
-  }
-
-  .biography {
-    grid-area: biography;
-  }
-
-  @media (min-width: 768px) {
-    grid-template-columns: 10% auto;
-    grid-template-areas: "title title" "selfie biography";
-    gap: 2rem;
-  }
-
-  @media (max-width: 767px) {
-    grid-template-columns: auto 55%;
-    grid-template-areas: "selfie title" "biography biography";
-    gap: 2rem 1rem;
+    .biography {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      position: relative;
+    }
   }
 }
